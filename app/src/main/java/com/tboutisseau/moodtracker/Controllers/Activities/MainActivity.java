@@ -1,11 +1,10 @@
 package com.tboutisseau.moodtracker.Controllers.Activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +12,7 @@ import android.widget.EditText;
 
 import com.tboutisseau.moodtracker.Controllers.Fragments.PageAdapter;
 import com.tboutisseau.moodtracker.R;
-import com.tboutisseau.moodtracker.Models.Mood;
-
-import java.util.HashMap;
+import com.tboutisseau.moodtracker.Views.VerticalViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,11 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         final FloatingActionButton historyButton = findViewById(R.id.open_history_button);
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        VerticalViewPager viewPager = findViewById(R.id.view_pager);
 
         PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager());
 
