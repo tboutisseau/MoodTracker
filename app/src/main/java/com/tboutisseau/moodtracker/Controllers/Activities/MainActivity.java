@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.tboutisseau.moodtracker.Controllers.Fragments.PageAdapter;
 import com.tboutisseau.moodtracker.R;
 import com.tboutisseau.moodtracker.Models.Mood;
 
@@ -27,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         final FloatingActionButton historyButton = findViewById(R.id.open_history_button);
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
 
+        ViewPager viewPager = findViewById(R.id.view_pager);
+
+        PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager());
+
+        viewPager.setAdapter(adapter);
+
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,11 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 openAddCommentDialog();
             }
         });
-
-        HashMap<Integer, Mood> moodsMap = new HashMap<>();
-        Mood sadMood = new Mood(R.drawable.smiley_sad, R.color.faded_red, R.raw.nobook);
-        moodsMap.put(0, sadMood);
-
     }
 
     // Method to display the dialog box to add a comment to a mood
