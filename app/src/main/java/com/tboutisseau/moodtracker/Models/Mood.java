@@ -1,6 +1,14 @@
 package com.tboutisseau.moodtracker.Models;
 
-public class Mood {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+/**
+ * Mood object that contains the icon, the background color, the sound, and the comment associated wich each mood
+ * implements Parcelable to send the object to the fragment
+ */
+
+public class Mood implements Parcelable {
     private int moodIcon;
     private int moodBackgroundColor;
     private int moodSound;
@@ -12,6 +20,7 @@ public class Mood {
      * @param moodBackgroundColor
      * @param moodSound
      * @param comment
+     *
      */
     public Mood (int moodIcon, int moodBackgroundColor, int moodSound, String comment) {
         this.moodIcon = moodIcon;
@@ -20,28 +29,44 @@ public class Mood {
         this.comment = comment;
     }
 
-    public int getMoodIcon() {
-        return moodIcon;
+    // Write to parcel
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(moodIcon);
+        dest.writeInt(moodBackgroundColor);
+        dest.writeInt(moodSound);
     }
 
-    public void setMoodIcon(int moodIcon) {
-        this.moodIcon = moodIcon;
+    // Read from parcel
+    protected Mood(Parcel in) {
+        moodIcon = in.readInt();
+        moodBackgroundColor = in.readInt();
+        moodSound = in.readInt();
+    }
+
+    // Parcel creator
+    public static final Parcelable.Creator<Mood> CREATOR = new Parcelable.Creator<Mood>() {
+        public Mood createFromParcel(Parcel in) {
+            return new Mood(in);
+        }
+
+        @Override
+        public Mood[] newArray(int size) {
+            return new Mood[size];
+        }
+    };
+
+    // Getters and setters
+    public int getMoodIcon() {
+        return moodIcon;
     }
 
     public int getMoodBackgroundColor() {
         return moodBackgroundColor;
     }
 
-    public void setMoodBackgroundColor(int moodBackgroundColor) {
-        this.moodBackgroundColor = moodBackgroundColor;
-    }
-
     public int getMoodSound() {
         return moodSound;
-    }
-
-    public void setMoodSound(int moodSound) {
-        this.moodSound = moodSound;
     }
 
     public String getComment() {
@@ -51,4 +76,10 @@ public class Mood {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
 }

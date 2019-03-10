@@ -21,16 +21,19 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return new SadMoodFragment();
-        } else if (position == 1) {
-            return new DisappointedMoodFragment();
-        } else if (position == 2) {
-            return new NormalMoodFragment();
-        } else if (position == 3) {
-            return new HappyMoodFragment();
-        } else {
-            return new SuperHappyMoodFragment();
+        switch (position) {
+            case 0:
+                return new SadMoodFragment();
+            case 1:
+                return new DisappointedMoodFragment();
+            case 2:
+                return new NormalMoodFragment();
+            case 3:
+                return new HappyMoodFragment();
+            case 4:
+                return new SuperHappyMoodFragment();
+            default:
+                return new HappyMoodFragment();
         }
     }
 
