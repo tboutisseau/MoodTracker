@@ -3,14 +3,17 @@ package com.tboutisseau.moodtracker.Controllers.Activities;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.tboutisseau.moodtracker.Controllers.Fragments.PageAdapter;
 import com.tboutisseau.moodtracker.Models.Mood;
@@ -20,7 +23,6 @@ import com.tboutisseau.moodtracker.Views.VerticalViewPager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,14 +40,7 @@ public class MainActivity extends AppCompatActivity {
         final FloatingActionButton historyButton = findViewById(R.id.open_history_button);
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
 
-        VerticalViewPager viewPager = findViewById(R.id.view_pager);
-
-        PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager());
-
-        viewPager.setAdapter(adapter);
-
-        // Set Happy mood as default
-        viewPager.setCurrentItem(3);
+        setUpViewPager();
 
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +58,44 @@ public class MainActivity extends AppCompatActivity {
 
         setAlarm();
     }
+
+    /**
+     * Method to set up the viewpager and play a sound on page selected
+     */
+    private void setUpViewPager() {
+        VerticalViewPager viewPager = findViewById(R.id.view_pager);
+
+        PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager());
+
+        viewPager.setAdapter(adapter);
+
+        // Set Happy mood as default
+        viewPager.setCurrentItem(3);
+
+        VerticalViewPager.OnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0 :
+                        Toast.makeText(MainActivity.this, "Page 0", Toast.LENGTH_SHORT).show();
+                        playSound(R.raw.nobook);
+                        break;
+                    case 1 :
+                        playSound(R.raw.open);
+                        break;
+                }
+            }
+        };
+
+        viewPager.addOnPageChangeListener(pageChangeListener);
+    }
+
+    public void playSound(int fileName) {
+        MediaPlayer mediaPlayer = (MediaPlayer) MediaPlayer.create(MainActivity.this, fileName);
+        mediaPlayer.start();
+    }
+
 
     /**
      * Setting the alarm to fire at 23:59:59 everyday, starting the save mood process

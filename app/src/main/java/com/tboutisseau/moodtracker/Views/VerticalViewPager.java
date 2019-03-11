@@ -19,8 +19,6 @@ public class VerticalViewPager extends ViewPager {
 
     private int mSwipeOrientation;
 
-    //private ScrollerCustomDuration mScroller = null;
-
 
     public VerticalViewPager(Context context) {
         super(context);
@@ -115,4 +113,5 @@ public class VerticalViewPager extends ViewPager {
             }
         }
     }
+
 }
