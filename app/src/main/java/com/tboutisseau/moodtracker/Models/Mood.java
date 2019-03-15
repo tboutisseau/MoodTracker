@@ -4,11 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Mood object that contains the icon, the background color, the sound, and the comment associated wich each mood
- * implements Parcelable to send the object to the fragment
+ * Mood object that contains the icon, the background color, the sound, and the comment associated with each mood
  */
 
-public class Mood implements Parcelable {
+public class Mood {
     private int moodIcon;
     private int moodBackgroundColor;
     private int moodSound;
@@ -29,32 +28,6 @@ public class Mood implements Parcelable {
         this.comment = comment;
     }
 
-    // Write to parcel
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(moodIcon);
-        dest.writeInt(moodBackgroundColor);
-        dest.writeInt(moodSound);
-    }
-
-    // Read from parcel
-    protected Mood(Parcel in) {
-        moodIcon = in.readInt();
-        moodBackgroundColor = in.readInt();
-        moodSound = in.readInt();
-    }
-
-    // Parcel creator
-    public static final Parcelable.Creator<Mood> CREATOR = new Parcelable.Creator<Mood>() {
-        public Mood createFromParcel(Parcel in) {
-            return new Mood(in);
-        }
-
-        @Override
-        public Mood[] newArray(int size) {
-            return new Mood[size];
-        }
-    };
 
     // Getters and setters
     public int getMoodIcon() {
@@ -77,9 +50,5 @@ public class Mood implements Parcelable {
         this.comment = comment;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
 }

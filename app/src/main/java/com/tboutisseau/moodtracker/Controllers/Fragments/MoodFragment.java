@@ -17,39 +17,42 @@ import com.tboutisseau.moodtracker.R;
 import java.util.ArrayList;
 
 /**
- * Fragment that takes its data from an arraylist of Mood objects to display
+ * Fragment that takes its data from a Mood object to display
  * the proper smiley and background color
  */
 public class MoodFragment extends Fragment {
 
-    // Keys for the bundle
-    private final static String MOODS_LIST = "moods_list";
-
-    //
     private LinearLayout rootView;
     private ImageView imageView;
-    private ArrayList<Mood> moodsList;
-
+    private Mood mood;
 
     public MoodFragment() {
         // Required empty public constructor
     }
 
-    // Method to create a new instance of MoodFragment, and add data to its bundle
-    public static MoodFragment newInstance(ArrayList<Mood> moodsList) {
+    /**
+     * Method to create a new instance of MoodFragment
+     * @param mood
+     * @return
+     */
+    public static MoodFragment newInstance(Mood mood) {
 
         // Make new fragment
         MoodFragment moodFragment = new MoodFragment();
 
-        // Make bundle and add data
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(MOODS_LIST, moodsList);
-        moodFragment.setArguments(args);
+        moodFragment.mood = mood;
 
         return moodFragment;
     }
 
 
+    /**
+     * Create the view and assign the smiley and background color to it
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,12 +61,12 @@ public class MoodFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mood, container, false);
 
         // Get the widgets from the layout
-        rootView = (LinearLayout) view.findViewById(R.id.fragment_mood_rootview);
-        imageView = (ImageView) view.findViewById(R.id.mood_icon_imageview);
+        rootView = view.findViewById(R.id.fragment_mood_rootview);
+        imageView = view.findViewById(R.id.mood_icon_imageview);
 
-
-
-
+        // Set the widgets with the proper values
+        rootView.setBackgroundColor(mood.getMoodBackgroundColor());
+        imageView.setImageResource(mood.getMoodIcon());
 
         return view;
     }

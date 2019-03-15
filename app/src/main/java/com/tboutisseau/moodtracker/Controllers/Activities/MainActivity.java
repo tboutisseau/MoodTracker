@@ -23,11 +23,12 @@ import com.tboutisseau.moodtracker.Views.VerticalViewPager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     //// Declaring variables
-    private ArrayList<Mood> moodslist;
+    private List<Mood> moodsList;
 
     // request code for the alarms pending intent
     public static final int ALARM_CODE = 3;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         final FloatingActionButton historyButton = findViewById(R.id.open_history_button);
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
+
+        initData();
 
         setUpViewPager();
 
@@ -60,12 +63,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Initiate the list of 5 moods
+     */
+    private void initData() {
+        moodsList = new ArrayList<>();
+        Mood sadMood = new Mood(R.color.faded_red, R.drawable.smiley_sad, R.raw.nobook, "");
+        Mood disappointedMood = new Mood(R.color.warm_grey, R.drawable.smiley_disappointed, R.raw.open, "");
+        Mood normalMood = new Mood(R.color.cornflower_blue_65, R.drawable.smiley_normal, R.raw.nobook, "");
+        Mood happyMood = new Mood(R.color.light_sage, R.drawable.smiley_happy, R.raw.open, "");
+        Mood superHappyMood = new Mood(R.color.banana_yellow, R.drawable.smiley_super_happy, R.raw.nobook, "");
+
+        moodsList.add(sadMood);
+        moodsList.add(disappointedMood);
+        moodsList.add(normalMood);
+        moodsList.add(happyMood);
+        moodsList.add(superHappyMood);
+    }
+
+    /**
      * Method to set up the viewpager and play a sound on page selected
      */
     private void setUpViewPager() {
         VerticalViewPager viewPager = findViewById(R.id.view_pager);
 
-        PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager());
+        PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager(), moodsList);
 
         viewPager.setAdapter(adapter);
 
@@ -92,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playSound(int fileName) {
-        MediaPlayer mediaPlayer = (MediaPlayer) MediaPlayer.create(MainActivity.this, fileName);
+        MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, fileName);
         mediaPlayer.start();
     }
 

@@ -22,7 +22,7 @@ public class VerticalViewPager extends ViewPager {
 
     public VerticalViewPager(Context context) {
         super(context);
-        mSwipeOrientation = HORIZONTAL;
+        mSwipeOrientation = VERTICAL;
     }
 
     public VerticalViewPager(Context context, AttributeSet attrs) {
