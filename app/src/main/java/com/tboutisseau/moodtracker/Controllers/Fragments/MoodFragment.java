@@ -3,6 +3,7 @@ package com.tboutisseau.moodtracker.Controllers.Fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  */
 public class MoodFragment extends Fragment {
 
-    private LinearLayout rootView;
+    private ConstraintLayout rootView;
     private ImageView imageView;
     private Mood mood;
 
@@ -65,7 +66,7 @@ public class MoodFragment extends Fragment {
         imageView = view.findViewById(R.id.mood_icon_imageview);
 
         // Set the widgets with the proper values
-        rootView.setBackgroundColor(mood.getMoodBackgroundColor());
+        rootView.setBackgroundResource(mood.getMoodBackgroundColor());
         imageView.setImageResource(mood.getMoodIcon());
 
         return view;

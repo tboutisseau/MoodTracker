@@ -21,9 +21,9 @@ public class Mood {
      * @param comment
      *
      */
-    public Mood (int moodIcon, int moodBackgroundColor, int moodSound, String comment) {
-        this.moodIcon = moodIcon;
+    public Mood (int moodBackgroundColor, int moodIcon, int moodSound, String comment) {
         this.moodBackgroundColor = moodBackgroundColor;
+        this.moodIcon = moodIcon;
         this.moodSound = moodSound;
         this.comment = comment;
     }
