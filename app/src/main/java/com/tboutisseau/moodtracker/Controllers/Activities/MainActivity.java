@@ -33,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     //// Declaring variables
     private List<Mood> moodsList;
-    private MediaPlayer mediaPlayer;
-    private SoundPool soundPool;
-    private int sadSound, disappointedSound, normalSound, happySound, superHappySound;
+    private MediaPlayer mMediaPlayer;
 
     // request code for the alarms pending intent
     public static final int ALARM_CODE = 3;
@@ -49,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
 
         initData();
-
-        setUpSoundPool();
 
         setUpViewPager();
 
@@ -75,25 +71,27 @@ public class MainActivity extends AppCompatActivity {
      * Initiate the list of 5 moods
      */
     private void initData() {
-        moodsList = new ArrayList<>();
-        Mood sadMood = new Mood(R.color.faded_red, R.drawable.smiley_sad, R.raw.nobook, "");
-        Mood disappointedMood = new Mood(R.color.warm_grey, R.drawable.smiley_disappointed, R.raw.open, "");
-        Mood normalMood = new Mood(R.color.cornflower_blue_65, R.drawable.smiley_normal, R.raw.nobook, "");
-        Mood happyMood = new Mood(R.color.light_sage, R.drawable.smiley_happy, R.raw.open, "");
-        Mood superHappyMood = new Mood(R.color.banana_yellow, R.drawable.smiley_super_happy, R.raw.nobook, "");
+        if(moodsList == null) {
+            moodsList = new ArrayList<>();
+            Mood sadMood = new Mood(R.color.faded_red, R.drawable.smiley_sad, R.raw.sound1, "");
+            Mood disappointedMood = new Mood(R.color.warm_grey, R.drawable.smiley_disappointed, R.raw.sound2, "");
+            Mood normalMood = new Mood(R.color.cornflower_blue_65, R.drawable.smiley_normal, R.raw.sound3, "");
+            Mood happyMood = new Mood(R.color.light_sage, R.drawable.smiley_happy, R.raw.sound4, "");
+            Mood superHappyMood = new Mood(R.color.banana_yellow, R.drawable.smiley_super_happy, R.raw.sound5, "");
 
-        moodsList.add(sadMood);
-        moodsList.add(disappointedMood);
-        moodsList.add(normalMood);
-        moodsList.add(happyMood);
-        moodsList.add(superHappyMood);
+            moodsList.add(sadMood);
+            moodsList.add(disappointedMood);
+            moodsList.add(normalMood);
+            moodsList.add(happyMood);
+            moodsList.add(superHappyMood);
+        }
     }
 
     /**
      * Method to set up the viewpager and play a sound on page selected
      */
     private void setUpViewPager() {
-        VerticalViewPager viewPager = findViewById(R.id.view_pager);
+        final VerticalViewPager viewPager = findViewById(R.id.view_pager);
 
         PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager(), moodsList);
 
@@ -107,72 +105,30 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                Mood currentMood = moodsList.get(position);
+                int sound = currentMood.getMoodSound();
 
-                switch (position) {
-                    case 0 :
-                        Toast.makeText(MainActivity.this, "Page 0", Toast.LENGTH_SHORT).show();
-                        playSound(sadSound);
-                        break;
-                    case 1 :
-                        playSound(disappointedSound);
-                        break;
-                    case 2 :
-                        playSound(normalSound);
-                        break;
-                    case 3 :
-                        playSound(happySound);
-                        break;
-                    case 4 :
-                        playSound(superHappySound);
-                        break;
+                if (mMediaPlayer == null) {
+                    mMediaPlayer = MediaPlayer.create(MainActivity.this, sound);
                 }
+
+                mMediaPlayer.start();
+
+                // When the sound is done playing, release the MediaPlayer
+                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        if (mMediaPlayer != null) {
+                            mMediaPlayer.release();
+                            mMediaPlayer = null;
+                            Toast.makeText(MainActivity.this, "MediaPlayer released", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         };
 
         viewPager.addOnPageChangeListener(pageChangeListener);
-    }
-
-    /**
-     * Method to prepare the SoundPool with the 5 sounds
-     */
-    public void setUpSoundPool() {
-        // Check if the SoundPool already exists and create a new one if not.
-        if (soundPool == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .build();
-
-                soundPool = new SoundPool.Builder()
-                        .setMaxStreams(5)
-                        .setAudioAttributes(audioAttributes)
-                        .build();
-
-            } else {
-                soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 1);
-            }
-        }
-
-        sadSound = soundPool.load(this, R.raw.sound1,1);
-        disappointedSound = soundPool.load(this, R.raw.sound2, 1);
-        normalSound = soundPool.load(this, R.raw.sound3, 1);
-        happySound = soundPool.load(this, R.raw.sound4, 1);
-        superHappySound = soundPool.load(this, R.raw.sound5, 1);
-    }
-
-    /**
-     * Method to play a sound. Checks if the sounds are loaded in the SoundPool first.
-     * @param sound
-     */
-    public void playSound(final int sound) {
-        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId,
-                                       int status) {
-                soundPool.play(sound, 1, 1, 0, 0, 1);
-            }
-        });
     }
 
 
@@ -240,11 +196,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Release the soundpool when the activity stops to free up memory
+    /**
+     * Release the soundpool when the activity stops to free up memory
+     */
     @Override
     public void onStop() {
         super.onStop();
-        soundPool.release();
-        soundPool = null;
+        mMediaPlayer.release();
     }
+
 }
