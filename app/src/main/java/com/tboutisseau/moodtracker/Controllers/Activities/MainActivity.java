@@ -3,11 +3,8 @@ package com.tboutisseau.moodtracker.Controllers.Activities;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -19,10 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.tboutisseau.moodtracker.Controllers.Fragments.PageAdapter;
 import com.tboutisseau.moodtracker.Models.Mood;
 import com.tboutisseau.moodtracker.R;
 import com.tboutisseau.moodtracker.Utils.SaveDataReceiver;
+import com.tboutisseau.moodtracker.Utils.SharedPrefsUtils;
 import com.tboutisseau.moodtracker.Views.VerticalViewPager;
 
 import java.util.ArrayList;
@@ -34,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
     //// Declaring variables
     private List<Mood> moodsList;
     private MediaPlayer mMediaPlayer;
+
+    private int mPosition;
+
+    private SharedPreferences mPreferences;
+    public static final String SHARED_PREFS = "SHARED_PREFS";
+    public static final String KEY_CURRENT_MOOD = "KEY_CURRENT_MOOD";
+    private Mood currentMood;
 
     // request code for the alarms pending intent
     public static final int ALARM_CODE = 3;
@@ -71,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
      * Initiate the list of 5 moods
      */
     private void initData() {
-        if(moodsList == null) {
+        if (moodsList == null) {
             moodsList = new ArrayList<>();
-            Mood sadMood = new Mood(R.color.faded_red, R.drawable.smiley_sad, R.raw.sound1, "");
-            Mood disappointedMood = new Mood(R.color.warm_grey, R.drawable.smiley_disappointed, R.raw.sound2, "");
-            Mood normalMood = new Mood(R.color.cornflower_blue_65, R.drawable.smiley_normal, R.raw.sound3, "");
-            Mood happyMood = new Mood(R.color.light_sage, R.drawable.smiley_happy, R.raw.sound4, "");
-            Mood superHappyMood = new Mood(R.color.banana_yellow, R.drawable.smiley_super_happy, R.raw.sound5, "");
+            Mood sadMood = new Mood(R.color.faded_red, R.drawable.smiley_sad, R.raw.sound1, 0);
+            Mood disappointedMood = new Mood(R.color.warm_grey, R.drawable.smiley_disappointed, R.raw.sound2, 1);
+            Mood normalMood = new Mood(R.color.cornflower_blue_65, R.drawable.smiley_normal, R.raw.sound3, 2);
+            Mood happyMood = new Mood(R.color.light_sage, R.drawable.smiley_happy, R.raw.sound4, 3);
+            Mood superHappyMood = new Mood(R.color.banana_yellow, R.drawable.smiley_super_happy, R.raw.sound5, 4);
 
             moodsList.add(sadMood);
             moodsList.add(disappointedMood);
@@ -97,34 +103,44 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
 
-        // Set Happy mood as default
-        viewPager.setCurrentItem(3);
+
+        mPosition = SharedPrefsUtils.getMoodPosition(this);
+
+
+        viewPager.setCurrentItem(mPosition);
+
 
 
         VerticalViewPager.OnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
+                SharedPrefsUtils.saveMoodPosition(MainActivity.this, position);
+                Toast.makeText(MainActivity.this, "position saved", Toast.LENGTH_SHORT).show();
+
                 Mood currentMood = moodsList.get(position);
                 int sound = currentMood.getMoodSound();
 
-                if (mMediaPlayer == null) {
-                    mMediaPlayer = MediaPlayer.create(MainActivity.this, sound);
+                if (mMediaPlayer != null) {
+                    mMediaPlayer.release();
                 }
+
+                mMediaPlayer = MediaPlayer.create(MainActivity.this, sound);
 
                 mMediaPlayer.start();
 
-                // When the sound is done playing, release the MediaPlayer
-                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        if (mMediaPlayer != null) {
-                            mMediaPlayer.release();
-                            mMediaPlayer = null;
-                            Toast.makeText(MainActivity.this, "MediaPlayer released", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+//                // When the sound is done playing, release the MediaPlayer
+//                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                    @Override
+//                    public void onCompletion(MediaPlayer mp) {
+//                        if (mMediaPlayer != null) {
+//                            mMediaPlayer.release();
+//                            mMediaPlayer = null;
+//                            Toast.makeText(MainActivity.this, "MediaPlayer released", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+
             }
         };
 
@@ -196,13 +212,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
     /**
-     * Release the soundpool when the activity stops to free up memory
+     * Release the MediaPlayer when the activity stops to free up memory
      */
     @Override
     public void onStop() {
         super.onStop();
-        mMediaPlayer.release();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+        }
+
     }
 
 }

@@ -38,6 +38,8 @@ public class MoodFragment extends Fragment {
      */
     public static MoodFragment newInstance(Mood mood) {
 
+        //TODO moodfragment.setBundle
+
         // Make new fragment
         MoodFragment moodFragment = new MoodFragment();
 
@@ -58,7 +60,7 @@ public class MoodFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Get the layout
+        // Get the layout of the fragment
         View view = inflater.inflate(R.layout.fragment_mood, container, false);
 
         // Get the widgets from the layout

@@ -12,20 +12,30 @@ public class Mood {
     private int moodBackgroundColor;
     private int moodSound;
     private String comment;
+    private int position;
 
     /** Constructor for the mood object
      *
      * @param moodIcon
      * @param moodBackgroundColor
      * @param moodSound
-     * @param comment
+     * @param position
      *
      */
-    public Mood (int moodBackgroundColor, int moodIcon, int moodSound, String comment) {
+    public Mood (int moodBackgroundColor, int moodIcon, int moodSound, int position) {
         this.moodBackgroundColor = moodBackgroundColor;
         this.moodIcon = moodIcon;
         this.moodSound = moodSound;
+        this.position = position;
+    }
+
+    protected Mood (String comment, int position) {
         this.comment = comment;
+        this.position = position;
+    }
+
+    public Mood (int moodBackgroundColor) {
+        this.moodBackgroundColor = moodBackgroundColor;
     }
 
 
