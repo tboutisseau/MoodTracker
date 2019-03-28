@@ -12,7 +12,7 @@ public class Mood {
     private int moodBackgroundColor;
     private int moodSound;
     private String comment;
-    private int position;
+    public int position;
 
     /** Constructor for the mood object
      *
@@ -29,7 +29,7 @@ public class Mood {
         this.position = position;
     }
 
-    protected Mood (String comment, int position) {
+    public Mood (String comment, int position) {
         this.comment = comment;
         this.position = position;
     }
@@ -50,6 +50,10 @@ public class Mood {
 
     public int getMoodSound() {
         return moodSound;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     public String getComment() {

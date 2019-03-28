@@ -3,20 +3,19 @@ package com.tboutisseau.moodtracker.Controllers.Activities;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.tboutisseau.moodtracker.Controllers.Fragments.PageAdapter;
 import com.tboutisseau.moodtracker.Models.Mood;
 import com.tboutisseau.moodtracker.R;
@@ -34,12 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private List<Mood> moodsList;
     private MediaPlayer mMediaPlayer;
 
+    private List<Mood> historyList;
+    private String TAG = "History_list_tag";
+
     private int mPosition;
 
-    private SharedPreferences mPreferences;
-    public static final String SHARED_PREFS = "SHARED_PREFS";
-    public static final String KEY_CURRENT_MOOD = "KEY_CURRENT_MOOD";
-    private Mood currentMood;
 
     // request code for the alarms pending intent
     public static final int ALARM_CODE = 3;
@@ -51,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         final FloatingActionButton historyButton = findViewById(R.id.open_history_button);
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
+
+        historyList = SharedPrefsUtils.getHistoryList(this);
+        Log.i(TAG, String.valueOf(historyList.size()));
 
         initData();
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Method to set up the viewpager and play a sound on page selected
+     * Method to set up the viewpager, play a sound and save the position on page selected
      */
     private void setUpViewPager() {
         final VerticalViewPager viewPager = findViewById(R.id.view_pager);
@@ -103,13 +104,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
 
-
         mPosition = SharedPrefsUtils.getMoodPosition(this);
 
-
         viewPager.setCurrentItem(mPosition);
-
-
 
         VerticalViewPager.OnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
 
@@ -128,18 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 mMediaPlayer = MediaPlayer.create(MainActivity.this, sound);
 
                 mMediaPlayer.start();
-
-//                // When the sound is done playing, release the MediaPlayer
-//                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                    @Override
-//                    public void onCompletion(MediaPlayer mp) {
-//                        if (mMediaPlayer != null) {
-//                            mMediaPlayer.release();
-//                            mMediaPlayer = null;
-//                            Toast.makeText(MainActivity.this, "MediaPlayer released", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
 
             }
         };
@@ -160,9 +145,9 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.HOUR_OF_DAY, 11);
+        calendar.set(Calendar.MINUTE, 26);
+        calendar.set(Calendar.SECOND, 00);
 
         // Make the alarm manager
         AlarmManager alarmManager = (AlarmManager) MainActivity.this.getSystemService(ALARM_SERVICE);
@@ -174,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Schedule time for the pending intent, and set the interval to a day
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
     }
 
 
@@ -183,7 +168,12 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_comment, null);
-        EditText mComment = dialogView.findViewById(R.id.edit_text_comment);
+        final EditText mComment = dialogView.findViewById(R.id.edit_text_comment);
+
+        if (SharedPrefsUtils.containsComment(getApplicationContext())) {
+            mComment.setText(SharedPrefsUtils.getComment(this));
+        }
+
         Button cancelButton = dialogView.findViewById(R.id.cancel_button);
         Button validateButton = dialogView.findViewById(R.id.validate_button);
 
@@ -197,7 +187,13 @@ public class MainActivity extends AppCompatActivity {
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Do something to validate the comment
+                SharedPrefsUtils.saveComment(MainActivity.this, mComment.getText().toString());
+                if (SharedPrefsUtils.containsComment(getBaseContext())) {
+                    Toast.makeText(MainActivity.this, "comment saved", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "new comment saved", Toast.LENGTH_SHORT).show();
+                }
+                dialogBuilder.dismiss();
             }
         });
 

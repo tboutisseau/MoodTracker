@@ -88,4 +88,11 @@ public class SharedPrefsUtils {
         return sharedPreferences.contains(KEY_LIST);
     }
 
+    public static void clearPreferences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
 }
