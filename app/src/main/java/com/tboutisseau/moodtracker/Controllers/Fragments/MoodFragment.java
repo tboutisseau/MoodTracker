@@ -27,6 +27,8 @@ public class MoodFragment extends Fragment {
     private ImageView imageView;
     private Mood mood;
 
+    public static final String MOOD_KEY = "MOOD_KEY";
+
     public MoodFragment() {
         // Required empty public constructor
     }
@@ -38,10 +40,13 @@ public class MoodFragment extends Fragment {
      */
     public static MoodFragment newInstance(Mood mood) {
 
-        //TODO moodfragment.setBundle
-
         // Make new fragment
         MoodFragment moodFragment = new MoodFragment();
+
+        // Create bundle to save the mood for when the fragment will be destroyed
+        Bundle args = new Bundle();
+        args.putSerializable(MOOD_KEY, mood);
+        moodFragment.setArguments(args);
 
         moodFragment.mood = mood;
 
@@ -66,6 +71,9 @@ public class MoodFragment extends Fragment {
         // Get the widgets from the layout
         rootView = view.findViewById(R.id.fragment_mood_rootview);
         imageView = view.findViewById(R.id.mood_icon_imageview);
+
+        // Retrieve the mood saved in the bundle
+        final Mood mood = (Mood) getArguments().getSerializable(MOOD_KEY);
 
         // Set the widgets with the proper values
         rootView.setBackgroundResource(mood.getMoodBackgroundColor());

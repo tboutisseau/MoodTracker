@@ -33,11 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Mood> moodsList;
     private MediaPlayer mMediaPlayer;
 
-    private List<Mood> historyList;
-    private String TAG = "History_list_tag";
-
     private int mPosition;
-
 
     // request code for the alarms pending intent
     public static final int ALARM_CODE = 3;
@@ -49,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         final FloatingActionButton historyButton = findViewById(R.id.open_history_button);
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
-
-        historyList = SharedPrefsUtils.getHistoryList(this);
-        Log.i(TAG, String.valueOf(historyList.size()));
 
         initData();
 
@@ -145,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 11);
-        calendar.set(Calendar.MINUTE, 26);
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        calendar.set(Calendar.MINUTE, 25);
         calendar.set(Calendar.SECOND, 00);
 
         // Make the alarm manager
@@ -159,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Schedule time for the pending intent, and set the interval to a day
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 5*60*1000, pendingIntent);
     }
 
 

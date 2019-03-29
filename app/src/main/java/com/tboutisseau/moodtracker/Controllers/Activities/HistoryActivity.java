@@ -35,14 +35,6 @@ public class HistoryActivity extends AppCompatActivity {
     private ImageView mImageView2Days;
     private ImageView mImageView1Days;
 
-//    private TextView mTextView7Days;
-//    private TextView mTextView6Days;
-//    private TextView mTextView5Days;
-//    private TextView mTextView4Days;
-//    private TextView mTextView3Days;
-//    private TextView mTextView2Days;
-//    private TextView mTextView1Days;
-
     public ArrayList<Mood> historyList = new ArrayList<>();
     public ArrayList<RelativeLayout> layoutsList = new ArrayList<>();
     public ArrayList<ImageView> imageList = new ArrayList<>();
@@ -62,7 +54,6 @@ public class HistoryActivity extends AppCompatActivity {
         if (SharedPrefsUtils.containsHistoryList(this)) {
             historyList = SharedPrefsUtils.getHistoryList(this);
             setLayouts();
-            //setDateText();
             setWidth();
             displayComment();
             setWidth();
@@ -122,24 +113,6 @@ public class HistoryActivity extends AppCompatActivity {
         backgroundList.add(defaultMood);
     }
 
-//    private void initDateTextList() {
-//        mTextView7Days = findViewById(R.id.textview_7_days);
-//        mTextView6Days = findViewById(R.id.textview_6_days);
-//        mTextView5Days = findViewById(R.id.textview_5_days);
-//        mTextView4Days = findViewById(R.id.textview_4_days);
-//        mTextView3Days = findViewById(R.id.textview_3_days);
-//        mTextView2Days = findViewById(R.id.textview_2_days);
-//        mTextView1Days = findViewById(R.id.textview_1_days);
-//
-//        dateTextList.add(mTextView7Days);
-//        dateTextList.add(mTextView6Days);
-//        dateTextList.add(mTextView5Days);
-//        dateTextList.add(mTextView4Days);
-//        dateTextList.add(mTextView3Days);
-//        dateTextList.add(mTextView2Days);
-//        dateTextList.add(mTextView1Days);
-//    }
-
     private void setLayouts() {
 
         for(int i = 0; i < historyList.size(); i++) {
@@ -156,53 +129,6 @@ public class HistoryActivity extends AppCompatActivity {
             relativeLayout.setVisibility(View.VISIBLE);
         }
     }
-
-//    private void setDateText() {
-//        for (int i = 0; i < historyList.size(); i++) {
-//            if (i == 0) {
-//                dateTextList.get(0).setText("Il y a une semaine");
-//            }
-//            if (i == 1) {
-//                dateTextList.get(0).setText("Il y a une semaine");
-//                dateTextList.get(1).setText("Il y a six jours");
-//            }
-//            if (i == 2) {
-//                dateTextList.get(0).setText("Il y a une semaine");
-//                dateTextList.get(1).setText("Il y a six jours");
-//                dateTextList.get(2).setText("Il y a cinq jours");
-//            }
-//            if (i == 3) {
-//                dateTextList.get(0).setText("Il y a une semaine");
-//                dateTextList.get(1).setText("Il y a six jours");
-//                dateTextList.get(2).setText("Il y a cinq jours");
-//                dateTextList.get(3).setText("Il y a quatre jours");
-//            }
-//            if (i == 4) {
-//                dateTextList.get(0).setText("Il y a une semaine");
-//                dateTextList.get(1).setText("Il y a six jours");
-//                dateTextList.get(2).setText("Il y a cinq jours");
-//                dateTextList.get(3).setText("Il y a quatre jours");
-//                dateTextList.get(4).setText("Il y a trois jours");
-//            }
-//            if (i == 5) {
-//                dateTextList.get(0).setText("Il y a une semaine");
-//                dateTextList.get(1).setText("Il y a six jours");
-//                dateTextList.get(2).setText("Il y a cinq jours");
-//                dateTextList.get(3).setText("Il y a quatre jours");
-//                dateTextList.get(4).setText("Il y a trois jours");
-//                dateTextList.get(5).setText("Avant-hier");
-//            }
-//            if (i == 6) {
-//                dateTextList.get(0).setText("Il y a une semaine");
-//                dateTextList.get(1).setText("Il y a six jours");
-//                dateTextList.get(2).setText("Il y a cinq jours");
-//                dateTextList.get(3).setText("Il y a quatre jours");
-//                dateTextList.get(4).setText("Il y a trois jours");
-//                dateTextList.get(5).setText("Avant-hier");
-//                dateTextList.get(5).setText("Hier");
-//            }
-//        }
-//    }
 
     private int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
