@@ -28,6 +28,7 @@
         app:maxImageSize="56dp"
         tools:targetApi="lollipop" />
 
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/open_history_button"
         android:layout_width="wrap_content"

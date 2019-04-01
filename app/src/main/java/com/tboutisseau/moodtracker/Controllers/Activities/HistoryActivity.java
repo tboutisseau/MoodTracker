@@ -1,5 +1,6 @@
 package com.tboutisseau.moodtracker.Controllers.Activities;
 
+import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tboutisseau.moodtracker.Models.Mood;
@@ -18,9 +20,17 @@ import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
+    /**
+     * Defining variables
+     * historyList : the list of saved moods
+     * layoutsList : list of relative layouts representing the saved mood for each day
+     * imageList : list of images representing the comment icon for each day
+     * backgroundList : list of colors
+     */
     private ArrayList<Mood> historyList = new ArrayList<>();
     private final ArrayList<RelativeLayout> layoutsList = new ArrayList<>();
     private final ArrayList<ImageView> imageList = new ArrayList<>();
+    private final ArrayList<TextView> textviewsList = new ArrayList<>();
     private final ArrayList<Mood> backgroundList = new ArrayList<>();
 
     @Override
@@ -30,6 +40,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         initLayoutsList();
         initImageViewsList();
+        initTextviewsList();
         initBackgroundList();
 
         if (SharedPrefsUtils.containsHistoryList(this)) {
@@ -37,7 +48,7 @@ public class HistoryActivity extends AppCompatActivity {
             setLayouts();
             setWidth();
             displayComment();
-            setWidth();
+            diplayNomoodSaved();
 
         }
     }
@@ -78,6 +89,19 @@ public class HistoryActivity extends AppCompatActivity {
         imageList.add(imageView1Days);
     }
 
+    private void initTextviewsList() {
+        textviewsList.add((TextView) findViewById(R.id.textview_7_days));
+        textviewsList.add((TextView) findViewById(R.id.textview_6_days));
+        textviewsList.add((TextView) findViewById(R.id.textview_5_days));
+        textviewsList.add((TextView) findViewById(R.id.textview_4_days));
+        textviewsList.add((TextView) findViewById(R.id.textview_3_days));
+        textviewsList.add((TextView) findViewById(R.id.textview_2_days));
+        textviewsList.add((TextView) findViewById(R.id.textview_1_days));
+    }
+
+    /**
+     * Initiate a background color list, adding a default color in case no mood is saved.
+     */
     private void initBackgroundList() {
         Mood sadMood = new Mood(R.color.faded_red);
         Mood disapointedMood = new Mood(R.color.warm_grey);
@@ -94,6 +118,9 @@ public class HistoryActivity extends AppCompatActivity {
         backgroundList.add(defaultMood);
     }
 
+    /**
+     * Method to set the proper background color on the bar representing the saved mood.
+     */
     private void setLayouts() {
 
         for(int i = 0; i < historyList.size(); i++) {
@@ -105,12 +132,19 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * method to get the width of the device screen
+     * @return the width of the device screen in pixels
+     */
     private int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
     }
 
+    /**
+     * Method to set the width of the bar
+     */
     private void setWidth() {
 
         for (int i = 0; i < historyList.size(); i++) {
@@ -119,11 +153,16 @@ public class HistoryActivity extends AppCompatActivity {
             ViewGroup.LayoutParams layoutParams = relativeLayout.getLayoutParams();
             int position = historyList.get(i).position;
 
-            screenWidth(position, layoutParams);
+            moodScreenWidth(position, layoutParams);
         }
     }
 
-    private void screenWidth(int position, ViewGroup.LayoutParams layoutParams) {
+    /**
+     * Method to define the width of the bar depending on the mood
+     * @param position
+     * @param layoutParams
+     */
+    private void moodScreenWidth(int position, ViewGroup.LayoutParams layoutParams) {
         int screenWidth = getScreenWidth();
 
         switch (position) {
@@ -148,6 +187,11 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Method to display the comment icon if a comment is saved.
+     * On icon clicked, displays the comment in a toast message.
+     */
     private void displayComment() {
 
         for(int i = 0; i < historyList.size(); i++) {
@@ -165,6 +209,22 @@ public class HistoryActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), historyList.get(finalI).getComment(), Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        }
+    }
+
+    /**
+     * Method to display the text NO MOOD SAVED when the default mood was saved that day
+     */
+    private void diplayNomoodSaved() {
+        for(int i = 0; i < historyList.size(); i++) {
+            TextView textView = textviewsList.get(i);
+
+            String nomoodSaved = " - Pas d'humeur enregistrée ce jour";
+
+            if (historyList.get(i).getPosition() == 5) {
+                textView.append(nomoodSaved);
+                textView.setTextColor(getResources().getColor(R.color.nomood_red));
             }
         }
     }

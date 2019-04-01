@@ -55,7 +55,7 @@ public class SharedPrefsUtils {
         return sharedPreferences.getInt(KEY_POSITION, 3);
     }
 
-    static boolean containsMood(Context context) {
+    public static boolean containsMood(Context context) {
         setSharedPrefs(context);
         return sharedPreferences.contains(KEY_POSITION);
     }

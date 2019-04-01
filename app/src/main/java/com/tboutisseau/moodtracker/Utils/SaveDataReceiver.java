@@ -25,6 +25,8 @@ public class SaveDataReceiver extends BroadcastReceiver {
             moodHistoryList = new ArrayList<>();
         }
 
+        // If a mood is saved in the SharedPreferences add its position and possible comment to the history list
+        // Else add a default mood (position 5) with no comment
         if (SharedPrefsUtils.containsMood(context)) {
             moodHistoryList.add(new Mood(SharedPrefsUtils.getComment(context), SharedPrefsUtils.getMoodPosition(context)));
         } else {
@@ -46,7 +48,7 @@ public class SaveDataReceiver extends BroadcastReceiver {
 
 
     /**
-     * When a new mood is saved in the array moodHistoryList, remove the keys position and comment from the preferences for the next day.
+     * Afetr a new mood has been saved in the array moodHistoryList, remove the keys position and comment from the preferences for the next day.
      * @param context
      */
     private void resetMood(Context context) {
@@ -54,7 +56,8 @@ public class SaveDataReceiver extends BroadcastReceiver {
         SharedPrefsUtils.removeMood(context, SharedPrefsUtils.KEY_COMMENT);
     }
 
-    // If the size of the array of saved moods is greater than 7 remove the first entry of the list
+    // If the size of the array of saved moods is greater than 7 remove the first entry of the list.
+    // That way it displays only the last 7 moods.
     private void removeMood() {
         if(moodHistoryList.size() > 7) {
             moodHistoryList.remove(0);
