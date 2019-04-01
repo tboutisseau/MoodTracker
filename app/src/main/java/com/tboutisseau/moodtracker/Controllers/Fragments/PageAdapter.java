@@ -10,12 +10,11 @@ import com.tboutisseau.moodtracker.Models.Mood;
 import java.util.List;
 
 public class PageAdapter extends FragmentPagerAdapter {
-    private Context mContext;
-    private List<Mood> moodsList;
+    private final List<Mood> moodsList;
 
     public PageAdapter(Context context, FragmentManager fm, List<Mood> moodsList) {
             super(fm);
-            mContext = context;
+        Context context1 = context;
             this.moodsList = moodsList;
     }
 

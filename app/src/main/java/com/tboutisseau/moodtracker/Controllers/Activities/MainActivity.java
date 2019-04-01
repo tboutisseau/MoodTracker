@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -33,10 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Mood> moodsList;
     private MediaPlayer mMediaPlayer;
 
-    private int mPosition;
-
     // request code for the alarms pending intent
-    public static final int ALARM_CODE = 3;
+    private static final int ALARM_CODE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
 
-        mPosition = SharedPrefsUtils.getMoodPosition(this);
+        int position = SharedPrefsUtils.getMoodPosition(this);
 
-        viewPager.setCurrentItem(mPosition);
+        viewPager.setCurrentItem(position);
 
         VerticalViewPager.OnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
 
@@ -138,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        calendar.set(Calendar.MINUTE, 25);
-        calendar.set(Calendar.SECOND, 00);
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
 
         // Make the alarm manager
         AlarmManager alarmManager = (AlarmManager) MainActivity.this.getSystemService(ALARM_SERVICE);
@@ -199,12 +196,6 @@ public class MainActivity extends AppCompatActivity {
     private void startHistory() {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
     }
 
     /**

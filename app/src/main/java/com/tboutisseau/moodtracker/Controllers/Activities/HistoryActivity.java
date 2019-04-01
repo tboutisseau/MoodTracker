@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tboutisseau.moodtracker.Models.Mood;
@@ -19,27 +18,10 @@ import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    private RelativeLayout mRelativeLayout7Days;
-    private RelativeLayout mRelativeLayout6Days;
-    private RelativeLayout mRelativeLayout5Days;
-    private RelativeLayout mRelativeLayout4Days;
-    private RelativeLayout mRelativeLayout3Days;
-    private RelativeLayout mRelativeLayout2Days;
-    private RelativeLayout mRelativeLayout1Days;
-
-    private ImageView mImageView7Days;
-    private ImageView mImageView6Days;
-    private ImageView mImageView5Days;
-    private ImageView mImageView4Days;
-    private ImageView mImageView3Days;
-    private ImageView mImageView2Days;
-    private ImageView mImageView1Days;
-
-    public ArrayList<Mood> historyList = new ArrayList<>();
-    public ArrayList<RelativeLayout> layoutsList = new ArrayList<>();
-    public ArrayList<ImageView> imageList = new ArrayList<>();
-    public ArrayList<Mood> backgroundList = new ArrayList<>();
-    public ArrayList<TextView> dateTextList = new ArrayList<>();
+    private ArrayList<Mood> historyList = new ArrayList<>();
+    private final ArrayList<RelativeLayout> layoutsList = new ArrayList<>();
+    private final ArrayList<ImageView> imageList = new ArrayList<>();
+    private final ArrayList<Mood> backgroundList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +31,6 @@ public class HistoryActivity extends AppCompatActivity {
         initLayoutsList();
         initImageViewsList();
         initBackgroundList();
-        //initDateTextList();
 
         if (SharedPrefsUtils.containsHistoryList(this)) {
             historyList = SharedPrefsUtils.getHistoryList(this);
@@ -62,39 +43,39 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void initLayoutsList() {
-        mRelativeLayout7Days = findViewById(R.id.layout_7_days);
-        mRelativeLayout6Days = findViewById(R.id.layout_6_days);
-        mRelativeLayout5Days = findViewById(R.id.layout_5_days);
-        mRelativeLayout4Days = findViewById(R.id.layout_4_days);
-        mRelativeLayout3Days = findViewById(R.id.layout_3_days);
-        mRelativeLayout2Days = findViewById(R.id.layout_2_days);
-        mRelativeLayout1Days = findViewById(R.id.layout_1_days);
+        RelativeLayout relativeLayout7Days = findViewById(R.id.layout_7_days);
+        RelativeLayout relativeLayout6Days = findViewById(R.id.layout_6_days);
+        RelativeLayout relativeLayout5Days = findViewById(R.id.layout_5_days);
+        RelativeLayout relativeLayout4Days = findViewById(R.id.layout_4_days);
+        RelativeLayout relativeLayout3Days = findViewById(R.id.layout_3_days);
+        RelativeLayout relativeLayout2Days = findViewById(R.id.layout_2_days);
+        RelativeLayout relativeLayout1Days = findViewById(R.id.layout_1_days);
 
-        layoutsList.add(mRelativeLayout7Days);
-        layoutsList.add(mRelativeLayout6Days);
-        layoutsList.add(mRelativeLayout5Days);
-        layoutsList.add(mRelativeLayout4Days);
-        layoutsList.add(mRelativeLayout3Days);
-        layoutsList.add(mRelativeLayout2Days);
-        layoutsList.add(mRelativeLayout1Days);
+        layoutsList.add(relativeLayout7Days);
+        layoutsList.add(relativeLayout6Days);
+        layoutsList.add(relativeLayout5Days);
+        layoutsList.add(relativeLayout4Days);
+        layoutsList.add(relativeLayout3Days);
+        layoutsList.add(relativeLayout2Days);
+        layoutsList.add(relativeLayout1Days);
     }
 
     private void initImageViewsList() {
-        mImageView7Days = findViewById(R.id.imageview_7_days);
-        mImageView6Days = findViewById(R.id.imageview_6_days);
-        mImageView5Days = findViewById(R.id.imageview_5_days);
-        mImageView4Days = findViewById(R.id.imageview_4_days);
-        mImageView3Days = findViewById(R.id.imageview_3_days);
-        mImageView2Days = findViewById(R.id.imageview_2_days);
-        mImageView1Days = findViewById(R.id.imageview_1_days);
+        ImageView imageView7Days = findViewById(R.id.imageview_7_days);
+        ImageView imageView6Days = findViewById(R.id.imageview_6_days);
+        ImageView imageView5Days = findViewById(R.id.imageview_5_days);
+        ImageView imageView4Days = findViewById(R.id.imageview_4_days);
+        ImageView imageView3Days = findViewById(R.id.imageview_3_days);
+        ImageView imageView2Days = findViewById(R.id.imageview_2_days);
+        ImageView imageView1Days = findViewById(R.id.imageview_1_days);
 
-        imageList.add(mImageView7Days);
-        imageList.add(mImageView6Days);
-        imageList.add(mImageView5Days);
-        imageList.add(mImageView4Days);
-        imageList.add(mImageView3Days);
-        imageList.add(mImageView2Days);
-        imageList.add(mImageView1Days);
+        imageList.add(imageView7Days);
+        imageList.add(imageView6Days);
+        imageList.add(imageView5Days);
+        imageList.add(imageView4Days);
+        imageList.add(imageView3Days);
+        imageList.add(imageView2Days);
+        imageList.add(imageView1Days);
     }
 
     private void initBackgroundList() {
@@ -118,12 +99,6 @@ public class HistoryActivity extends AppCompatActivity {
         for(int i = 0; i < historyList.size(); i++) {
             RelativeLayout relativeLayout = layoutsList.get(i);
             int position = historyList.get(i).getPosition();
-//
-//            if (position > 4) {
-//                position = 4;
-//            } else if (position < 0) {
-//                position = 0;
-//            }
 
             relativeLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundList.get(position).getMoodBackgroundColor()));
             relativeLayout.setVisibility(View.VISIBLE);

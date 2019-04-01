@@ -25,7 +25,8 @@
         app:backgroundTint="@android:color/transparent"
         app:elevation="0dp"
         app:fabSize="auto"
-        app:maxImageSize="56dp" />
+        app:maxImageSize="56dp"
+        tools:targetApi="lollipop" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/open_history_button"
@@ -39,7 +40,8 @@
         app:backgroundTint="@android:color/transparent"
         app:elevation="0dp"
         app:fabSize="auto"
-        app:maxImageSize="56dp" />
+        app:maxImageSize="56dp"
+        tools:targetApi="lollipop" />
 
 
 </FrameLayout>

@@ -38,22 +38,20 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_text_comment"
             android:background="@null"
             android:text="annuler"
-            android:layout_alignLeft="@+id/validate_button"
             android:textColor="@color/colorAccent"
-            tools:ignore="UnknownId" />
+            tools:ignore="UnknownId"
+            />
 
         <Button
             android:id="@+id/validate_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_text_comment"
-            android:layout_alignParentEnd="true"
             android:background="@null"
             android:text="valider"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+            />
 
     </LinearLayout>
 

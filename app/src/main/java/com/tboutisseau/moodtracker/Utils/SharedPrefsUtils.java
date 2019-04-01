@@ -9,10 +9,11 @@ import com.tboutisseau.moodtracker.Models.Mood;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SharedPrefsUtils {
 
-    static final String SHARED_PREFS = "SHARED_PREFS";
+    private static final String SHARED_PREFS = "SHARED_PREFS";
     static final String KEY_COMMENT = "KEY_COMMENT";
     static final String KEY_POSITION = "KEY_POSITION";
     private static final String  KEY_LIST = "KEY_LIST";
@@ -21,7 +22,7 @@ public class SharedPrefsUtils {
     private static SharedPreferences.Editor editor;
 
 
-    public static void setSharedPrefs(Context context) {
+    private static void setSharedPrefs(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
@@ -59,7 +60,7 @@ public class SharedPrefsUtils {
         return sharedPreferences.contains(KEY_POSITION);
     }
 
-    static void removeMood(Context context, String prefsName, String key) {
+    static void removeMood(Context context, String key) {
         setSharedPrefs(context);
         editor.remove(key);
         editor.apply();
@@ -79,7 +80,7 @@ public class SharedPrefsUtils {
         Gson gson = new Gson();
         String json = sharedPreferences.getString(KEY_LIST, "");
         Type type = new TypeToken<ArrayList<Mood>>() {}.getType();
-        if (json.equals("")) {
+        if (Objects.requireNonNull(json).equals("")) {
             return null;
         }
 
@@ -90,13 +91,6 @@ public class SharedPrefsUtils {
     public static boolean containsHistoryList(Context context) {
         setSharedPrefs(context);
         return sharedPreferences.contains(KEY_LIST);
-    }
-
-    public static void clearPreferences(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
     }
 
 }

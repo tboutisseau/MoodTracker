@@ -14,8 +14,8 @@ import com.tboutisseau.moodtracker.R;
  * Custom ViewPager that allows vertical swiping
  */
 public class VerticalViewPager extends ViewPager {
-    public static final int HORIZONTAL = 0;
-    public static final int VERTICAL = 1;
+    private static final int HORIZONTAL = 0;
+    private static final int VERTICAL = 1;
 
     private int mSwipeOrientation;
 
@@ -33,6 +33,11 @@ public class VerticalViewPager extends ViewPager {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(mSwipeOrientation == VERTICAL ? swapXY(event) : event);
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override

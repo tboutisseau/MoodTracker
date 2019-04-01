@@ -1,8 +1,5 @@
 package com.tboutisseau.moodtracker.Models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
@@ -60,10 +57,6 @@ public class Mood implements Serializable {
 
     public String getComment() {
         return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
 

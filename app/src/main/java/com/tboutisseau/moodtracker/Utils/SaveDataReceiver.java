@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * @author
  */
 public class SaveDataReceiver extends BroadcastReceiver {
-    private String TAG = "Save status";
 
     private ArrayList<Mood> moodHistoryList;
 
@@ -36,11 +35,8 @@ public class SaveDataReceiver extends BroadcastReceiver {
         removeMood();
         SharedPrefsUtils.saveHistoryList(context, moodHistoryList);
 
-
-        // Method to save the mood of the day
-        updateData();
-
         // Log to test the receiver
+        String TAG = "Save status";
         Log.i(TAG, "mood saved");
 
         // Toast to test the receiver
@@ -48,25 +44,18 @@ public class SaveDataReceiver extends BroadcastReceiver {
 
     }
 
-    private void updateData() {
-        //TODO
-        //charger historylist
-        // décaler d'un cran faire de la place pour le nouvel element
-        // ajouter l'element
-        // sauvegarder liste.
-    }
 
     /**
      * When a new mood is saved in the array moodHistoryList, remove the keys position and comment from the preferences for the next day.
      * @param context
      */
-    public void resetMood(Context context) {
-        SharedPrefsUtils.removeMood(context, SharedPrefsUtils.SHARED_PREFS, SharedPrefsUtils.KEY_POSITION);
-        SharedPrefsUtils.removeMood(context, SharedPrefsUtils.SHARED_PREFS, SharedPrefsUtils.KEY_COMMENT);
+    private void resetMood(Context context) {
+        SharedPrefsUtils.removeMood(context, SharedPrefsUtils.KEY_POSITION);
+        SharedPrefsUtils.removeMood(context, SharedPrefsUtils.KEY_COMMENT);
     }
 
-    // If the size of the array of saved moods is greater than 6 remove the first entry of the list
-    public void removeMood() {
+    // If the size of the array of saved moods is greater than 7 remove the first entry of the list
+    private void removeMood() {
         if(moodHistoryList.size() > 7) {
             moodHistoryList.remove(0);
         }
