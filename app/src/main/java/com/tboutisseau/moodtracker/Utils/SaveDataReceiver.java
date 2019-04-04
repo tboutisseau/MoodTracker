@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.tboutisseau.moodtracker.Models.Mood;
+import com.tboutisseau.moodtracker.R;
 
 import java.util.ArrayList;
 
@@ -28,9 +29,9 @@ public class SaveDataReceiver extends BroadcastReceiver {
         // If a mood is saved in the SharedPreferences add its position and possible comment to the history list
         // Else add a default mood (position 5) with no comment
         if (SharedPrefsUtils.containsMood(context)) {
-            moodHistoryList.add(new Mood(SharedPrefsUtils.getComment(context), SharedPrefsUtils.getMoodPosition(context)));
+            moodHistoryList.add(new Mood(SharedPrefsUtils.getColor(context), SharedPrefsUtils.getComment(context), SharedPrefsUtils.getMoodPosition(context)));
         } else {
-            moodHistoryList.add(new Mood("", 5));
+            moodHistoryList.add(new Mood(R.color.default_black,"", 5));
         }
 
         resetMood(context);
@@ -52,6 +53,7 @@ public class SaveDataReceiver extends BroadcastReceiver {
      * @param context
      */
     private void resetMood(Context context) {
+        SharedPrefsUtils.removeMood(context, SharedPrefsUtils.BACKGROUND_COLOR);
         SharedPrefsUtils.removeMood(context, SharedPrefsUtils.KEY_POSITION);
         SharedPrefsUtils.removeMood(context, SharedPrefsUtils.KEY_COMMENT);
     }

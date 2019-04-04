@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         final FloatingActionButton historyButton = findViewById(R.id.open_history_button);
         final FloatingActionButton addCommentButton = findViewById(R.id.add_comment_button);
+        final FloatingActionButton pieChartButton = findViewById(R.id.chart_button);
 
         initData();
 
@@ -61,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        pieChartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startChartActivity();
+            }
+        });
+
         setAlarm();
     }
 
@@ -70,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         if (moodsList == null) {
             moodsList = new ArrayList<>();
-            Mood sadMood = new Mood(R.color.faded_red, R.drawable.smiley_sad, R.raw.sound1, 0);
-            Mood disappointedMood = new Mood(R.color.warm_grey, R.drawable.smiley_disappointed, R.raw.sound2, 1);
-            Mood normalMood = new Mood(R.color.cornflower_blue_65, R.drawable.smiley_normal, R.raw.sound3, 2);
-            Mood happyMood = new Mood(R.color.light_sage, R.drawable.smiley_happy, R.raw.sound4, 3);
-            Mood superHappyMood = new Mood(R.color.banana_yellow, R.drawable.smiley_super_happy, R.raw.sound5, 4);
+            Mood sadMood = new Mood(R.color.faded_red, R.drawable.smiley_sad, R.raw.sad_sound, 0);
+            Mood disappointedMood = new Mood(R.color.warm_grey, R.drawable.smiley_disappointed, R.raw.disapointed_sound, 1);
+            Mood normalMood = new Mood(R.color.cornflower_blue_65, R.drawable.smiley_normal, R.raw.normal_sound, 2);
+            Mood happyMood = new Mood(R.color.light_sage, R.drawable.smiley_happy, R.raw.happy_sound, 3);
+            Mood superHappyMood = new Mood(R.color.banana_yellow, R.drawable.smiley_super_happy, R.raw.superhappy_sound, 4);
 
             moodsList.add(sadMood);
             moodsList.add(disappointedMood);
@@ -96,12 +104,18 @@ public class MainActivity extends AppCompatActivity {
 
         int position = SharedPrefsUtils.getMoodPosition(this);
 
-        viewPager.setCurrentItem(position);
+        if (SharedPrefsUtils.containsMood(this)) {
+            viewPager.setCurrentItem(position);
+        } else {
+            viewPager.setCurrentItem(3);
+        }
+
 
         VerticalViewPager.OnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
+                SharedPrefsUtils.saveColor(MainActivity.this, moodsList.get(position).getMoodBackgroundColor());
                 SharedPrefsUtils.saveMoodPosition(MainActivity.this, position);
                 Toast.makeText(MainActivity.this, "position saved", Toast.LENGTH_SHORT).show();
 
@@ -135,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.HOUR_OF_DAY, 11);
+        calendar.set(Calendar.MINUTE, 15);
+        calendar.set(Calendar.SECOND, 0);
 
         // Make the alarm manager
         AlarmManager alarmManager = (AlarmManager) MainActivity.this.getSystemService(ALARM_SERVICE);
@@ -149,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Schedule time for the pending intent, and set the interval to a day
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 5*60*1000, pendingIntent);
     }
 
 
@@ -195,6 +209,12 @@ public class MainActivity extends AppCompatActivity {
     // Method to start History activity
     private void startHistory() {
         Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    // Method to start the chart activity
+    private void startChartActivity() {
+        Intent intent = new Intent(this, ChartActivity.class);
         startActivity(intent);
     }
 

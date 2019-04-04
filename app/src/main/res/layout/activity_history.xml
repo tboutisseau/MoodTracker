@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     android:orientation="vertical"
-    tools:context=".Controllers.Activities.HistoryActivity"
-    android:background="@color/light_grey">
+    tools:context=".Controllers.Activities.HistoryActivity">
 
     <RelativeLayout
         android:id="@+id/layout_7_days"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:text="@string/seven_days_ago"
+
             android:textStyle="bold" />
 
         <ImageView
@@ -28,11 +28,10 @@
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textview_7_days"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_comment_black_48px"
-            android:visibility="invisible"
-            android:contentDescription="TODO" />
+            android:contentDescription="@string/descript_comment_icon"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 
@@ -48,8 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:textStyle="bold"
-            android:text="@string/six_days_ago"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageview_6_days"
@@ -57,9 +55,9 @@
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textview_6_days"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_comment_black_48px"
+            android:contentDescription="@string/descript_comment_icon"
             android:visibility="invisible" />
 
     </RelativeLayout>
@@ -76,18 +74,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:textStyle="bold"
-            android:text="@string/five_days_ago"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageview_5_days"
             android:layout_width="20dp"
             android:layout_height="20dp"
+
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textview_5_days"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_comment_black_48px"
+            android:contentDescription="@string/descript_comment_icon"
             android:visibility="invisible" />
 
     </RelativeLayout>
@@ -104,8 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:textStyle="bold"
-            android:text="@string/four_days_ago"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageview_4_days"
@@ -113,9 +111,9 @@
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textview_4_days"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_comment_black_48px"
+            android:contentDescription="@string/descript_comment_icon"
             android:visibility="invisible" />
 
     </RelativeLayout>
@@ -132,8 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:textStyle="bold"
-            android:text="@string/three_days_ago"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageview_3_days"
@@ -141,9 +138,9 @@
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textview_3_days"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_comment_black_48px"
+            android:contentDescription="@string/descript_comment_icon"
             android:visibility="invisible" />
 
     </RelativeLayout>
@@ -160,8 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:textStyle="bold"
-            android:text="@string/two_days_ago"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageview_2_days"
@@ -169,9 +165,9 @@
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textview_2_days"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_comment_black_48px"
+            android:contentDescription="@string/descript_comment_icon"
             android:visibility="invisible" />
 
     </RelativeLayout>
@@ -188,8 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:textStyle="bold"
-            android:text="@string/one_days_ago"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageview_1_days"
@@ -197,9 +192,9 @@
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textview_1_days"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_comment_black_48px"
+            android:contentDescription="@string/descript_comment_icon"
             android:visibility="invisible" />
 
     </RelativeLayout>

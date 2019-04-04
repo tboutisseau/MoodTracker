@@ -28,7 +28,8 @@ public class Mood implements Serializable {
         this.position = position;
     }
 
-    public Mood (String comment, int position) {
+    public Mood (int moodBackgroundColor, String comment, int position) {
+        this.moodBackgroundColor = moodBackgroundColor;
         this.comment = comment;
         this.position = position;
     }

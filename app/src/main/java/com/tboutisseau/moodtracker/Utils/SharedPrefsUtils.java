@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tboutisseau.moodtracker.Models.Mood;
+import com.tboutisseau.moodtracker.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Objects;
 public class SharedPrefsUtils {
 
     private static final String SHARED_PREFS = "SHARED_PREFS";
+    static  final String BACKGROUND_COLOR = "BACKGROUND_COLOR";
     static final String KEY_COMMENT = "KEY_COMMENT";
     static final String KEY_POSITION = "KEY_POSITION";
     private static final String  KEY_LIST = "KEY_LIST";
@@ -25,6 +27,17 @@ public class SharedPrefsUtils {
     private static void setSharedPrefs(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+    }
+
+    public static void saveColor (Context context, int backgroundColor) {
+        setSharedPrefs(context);
+        editor.putInt(BACKGROUND_COLOR, backgroundColor);
+        editor.apply();
+    }
+
+    public static int getColor (Context context) {
+        setSharedPrefs(context);
+        return sharedPreferences.getInt(BACKGROUND_COLOR, R.color.default_black);
     }
 
     public static void saveComment (Context context, String comment) {
@@ -91,6 +104,12 @@ public class SharedPrefsUtils {
     public static boolean containsHistoryList(Context context) {
         setSharedPrefs(context);
         return sharedPreferences.contains(KEY_LIST);
+    }
+
+    public static void clearPreferences(Context context) {
+        setSharedPrefs(context);
+        editor.clear();
+        editor.apply();
     }
 
 }

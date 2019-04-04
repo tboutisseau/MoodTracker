@@ -9,4 +9,12 @@
     <string name="three_days_ago">Il y a trois jours</string>
     <string name="two_days_ago">Avant hier</string>
     <string name="one_days_ago">Hier</string>
+    <string name="descript_comment_icon">comment_icon</string>
+    <string name="sad_mood">triste</string>
+    <string name="disappointed_mood">déçu</string>
+    <string name="normal_mood">normal</string>
+    <string name="happy_mood">heureux</string>
+    <string name="super_happy_mood">très heureux</string>
+    <string name="no_mood">rien</string>
+    <string name="moods_of_the_week">humeurs de la semaine</string>
 </resources>

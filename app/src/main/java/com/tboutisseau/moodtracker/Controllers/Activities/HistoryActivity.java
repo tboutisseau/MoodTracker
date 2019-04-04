@@ -1,9 +1,7 @@
 package com.tboutisseau.moodtracker.Controllers.Activities;
 
-import android.support.annotation.ColorRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +44,7 @@ public class HistoryActivity extends AppCompatActivity {
         if (SharedPrefsUtils.containsHistoryList(this)) {
             historyList = SharedPrefsUtils.getHistoryList(this);
             setLayouts();
+            setDateText();
             setWidth();
             displayComment();
             diplayNomoodSaved();
@@ -108,7 +107,7 @@ public class HistoryActivity extends AppCompatActivity {
         Mood normalMood = new Mood(R.color.cornflower_blue_65);
         Mood happyMood = new Mood(R.color.light_sage);
         Mood superHappyMood = new Mood (R.color.banana_yellow);
-        Mood defaultMood = new Mood (R.color.default_orange);
+        Mood defaultMood = new Mood (R.color.default_black);
 
         backgroundList.add(sadMood);
         backgroundList.add(disapointedMood);
@@ -125,10 +124,64 @@ public class HistoryActivity extends AppCompatActivity {
 
         for(int i = 0; i < historyList.size(); i++) {
             RelativeLayout relativeLayout = layoutsList.get(i);
-            int position = historyList.get(i).getPosition();
+            int backgroundColor = historyList.get(i).getMoodBackgroundColor();
 
-            relativeLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundList.get(position).getMoodBackgroundColor()));
+            relativeLayout.setBackgroundResource(backgroundColor);
             relativeLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setDateText() {
+
+        for (int i = 0; i < historyList.size(); i++) {
+            if (i == 0) {
+                textviewsList.get(0).setText(R.string.one_days_ago);
+            }
+            if (i == 1) {
+                textviewsList.get(0).setText(R.string.two_days_ago);
+                textviewsList.get(1).setText(R.string.one_days_ago);
+            }
+
+            if (i == 2) {
+                textviewsList.get(0).setText(R.string.three_days_ago);
+                textviewsList.get(1).setText(R.string.two_days_ago);
+                textviewsList.get(2).setText(R.string.one_days_ago);
+
+            }
+
+            if (i == 3) {
+                textviewsList.get(0).setText(R.string.four_days_ago);
+                textviewsList.get(1).setText(R.string.three_days_ago);
+                textviewsList.get(2).setText(R.string.two_days_ago);
+                textviewsList.get(3).setText(R.string.one_days_ago);
+            }
+
+            if (i == 4) {
+                textviewsList.get(0).setText(R.string.five_days_ago);
+                textviewsList.get(1).setText(R.string.four_days_ago);
+                textviewsList.get(2).setText(R.string.three_days_ago);
+                textviewsList.get(3).setText(R.string.two_days_ago);
+                textviewsList.get(4).setText(R.string.one_days_ago);
+            }
+
+            if (i == 5) {
+                textviewsList.get(0).setText(R.string.six_days_ago);
+                textviewsList.get(1).setText(R.string.five_days_ago);
+                textviewsList.get(2).setText(R.string.four_days_ago);
+                textviewsList.get(3).setText(R.string.three_days_ago);
+                textviewsList.get(4).setText(R.string.two_days_ago);
+                textviewsList.get(5).setText(R.string.one_days_ago);
+            }
+
+            if (i == 6) {
+                textviewsList.get(0).setText(R.string.seven_days_ago);
+                textviewsList.get(1).setText(R.string.six_days_ago);
+                textviewsList.get(2).setText(R.string.five_days_ago);
+                textviewsList.get(3).setText(R.string.four_days_ago);
+                textviewsList.get(4).setText(R.string.three_days_ago);
+                textviewsList.get(5).setText(R.string.two_days_ago);
+                textviewsList.get(6).setText(R.string.one_days_ago);
+            }
         }
     }
 
@@ -224,7 +277,7 @@ public class HistoryActivity extends AppCompatActivity {
 
             if (historyList.get(i).getPosition() == 5) {
                 textView.append(nomoodSaved);
-                textView.setTextColor(getResources().getColor(R.color.nomood_red));
+                textView.setTextColor(getResources().getColor(R.color.off_white));
             }
         }
     }

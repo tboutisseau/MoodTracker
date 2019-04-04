@@ -7,8 +7,7 @@
     android:orientation="vertical"
     tools:context=".Controllers.Activities.MainActivity">
 
-    <com.tboutisseau.moodtracker.Views.VerticalViewPager
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.tboutisseau.moodtracker.Views.VerticalViewPager xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -22,6 +21,22 @@
         android:background="@null"
         android:elevation="0dp"
         android:src="@drawable/ic_note_add_black"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:fabSize="auto"
+        app:maxImageSize="56dp"
+        tools:targetApi="lollipop" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/chart_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="16dp"
+        android:background="@null"
+        android:elevation="0dp"
+        android:src="@drawable/ic_pie_chart_black_48dp"
         app:backgroundTint="@android:color/transparent"
         app:elevation="0dp"
         app:fabSize="auto"
