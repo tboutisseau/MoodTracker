@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 SharedPrefsUtils.saveColor(MainActivity.this, moodsList.get(position).getMoodBackgroundColor());
                 SharedPrefsUtils.saveMoodPosition(MainActivity.this, position);
-                Toast.makeText(MainActivity.this, "position saved", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "position saved", Toast.LENGTH_SHORT).show();
 
                 Mood currentMood = moodsList.get(position);
                 int sound = currentMood.getMoodSound();
@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 11);
-        calendar.set(Calendar.MINUTE, 15);
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 26);
         calendar.set(Calendar.SECOND, 0);
 
         // Make the alarm manager
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Schedule time for the pending intent, and set the interval to a day
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 5*60*1000, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 3*60*1000, pendingIntent);
     }
 
 
@@ -192,11 +192,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPrefsUtils.saveComment(MainActivity.this, mComment.getText().toString());
-                if (SharedPrefsUtils.containsComment(getBaseContext())) {
-                    Toast.makeText(MainActivity.this, "comment saved", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "new comment saved", Toast.LENGTH_SHORT).show();
-                }
+//                if (SharedPrefsUtils.containsComment(getBaseContext())) {
+//                    Toast.makeText(MainActivity.this, "comment saved", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(MainActivity.this, "new comment saved", Toast.LENGTH_SHORT).show();
+//                }
                 dialogBuilder.dismiss();
             }
         });
@@ -227,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
         }
-
     }
 
 }

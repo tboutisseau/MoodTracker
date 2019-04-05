@@ -100,8 +100,8 @@ public class ChartActivity extends AppCompatActivity {
         pieChart.setHoleRadius(30f);
         pieChart.setTransparentCircleRadius(36f);
         pieChart.setCenterText(getResources().getString(R.string.moods_of_the_week));
-        pieChart.setCenterTextRadiusPercent(42f);
-
+        pieChart.setCenterTextRadiusPercent(46f);
+        pieChart.setEntryLabelColor(getResources().getColor(R.color.medium_grey));
 
         // Disabling the legend
         Legend legend = pieChart.getLegend();

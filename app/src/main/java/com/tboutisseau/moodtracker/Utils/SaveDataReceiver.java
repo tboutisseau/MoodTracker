@@ -43,7 +43,7 @@ public class SaveDataReceiver extends BroadcastReceiver {
         Log.i(TAG, "mood saved");
 
         // Toast to test the receiver
-        Toast.makeText(context, "Mood saved", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Mood saved", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class SharedPrefsUtils {
 
+    // keys to store the color, comment, position, and historylist in the sharedPreferences
     private static final String SHARED_PREFS = "SHARED_PREFS";
     static  final String BACKGROUND_COLOR = "BACKGROUND_COLOR";
     static final String KEY_COMMENT = "KEY_COMMENT";
@@ -79,6 +80,7 @@ public class SharedPrefsUtils {
         editor.apply();
     }
 
+    // Storing the historyList in the preferences using Gson object
     static void saveHistoryList(Context context, ArrayList moodHistoryList) {
         setSharedPrefs(context);
         Gson gson = new Gson();
@@ -106,6 +108,7 @@ public class SharedPrefsUtils {
         return sharedPreferences.contains(KEY_LIST);
     }
 
+    // Method to reset the SharedPreferences. Only for development purposes.
     public static void clearPreferences(Context context) {
         setSharedPrefs(context);
         editor.clear();
