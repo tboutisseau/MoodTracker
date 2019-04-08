@@ -95,36 +95,43 @@ public class MainActivity extends AppCompatActivity {
      * Method to set up the viewpager, play a sound and save the position on page selected
      */
     private void setUpViewPager() {
+
         final VerticalViewPager viewPager = findViewById(R.id.view_pager);
 
+        // Creating the PageAdapter and passing it the list of the 5 moods to cycle through
         PageAdapter adapter = new PageAdapter(this, getSupportFragmentManager(), moodsList);
-
         viewPager.setAdapter(adapter);
 
+        // Declaring an int position to retrieve the position in shared prefs
         int position = SharedPrefsUtils.getMoodPosition(this);
 
+        // If shared prefs contains a position for the mood then we restore it in the ViewPager
+        // Else we set it to the default position for happy mood wich is 3
         if (SharedPrefsUtils.containsMood(this)) {
             viewPager.setCurrentItem(position);
         } else {
             viewPager.setCurrentItem(3);
         }
 
-
+        // Declaring the OnPageChangeListener
         VerticalViewPager.OnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
 
+            // Setting up pageChangeListener to save the mood position and color each time a new page is selected
             @Override
             public void onPageSelected(int position) {
                 SharedPrefsUtils.saveColor(MainActivity.this, moodsList.get(position).getMoodBackgroundColor());
                 SharedPrefsUtils.saveMoodPosition(MainActivity.this, position);
                 //Toast.makeText(MainActivity.this, "position saved", Toast.LENGTH_SHORT).show();
 
-                Mood currentMood = moodsList.get(position);
-                int sound = currentMood.getMoodSound();
+                // creating int sound that retrieves the sound of the selected mood
+                int sound = moodsList.get(position).getMoodSound();
 
+                // Release the mediaPlayer if it exists to free up memory
                 if (mMediaPlayer != null) {
                     mMediaPlayer.release();
                 }
 
+                // Creating the mediaPlayer to play the proper sound
                 mMediaPlayer = MediaPlayer.create(MainActivity.this, sound);
 
                 mMediaPlayer.start();
@@ -134,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.addOnPageChangeListener(pageChangeListener);
     }
-
 
     /**
      * Setting the alarm to fire at 23:59:59 everyday, starting the save mood process
@@ -148,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 16);
+        calendar.set(Calendar.HOUR_OF_DAY, 17);
+        calendar.set(Calendar.MINUTE, 50);
         calendar.set(Calendar.SECOND, 0);
 
         // Make the alarm manager
@@ -165,21 +171,25 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 3*60*1000, pendingIntent);
     }
 
-
-    // Method to display the dialog box to add a comment to a mood
+    /**
+     * displaying the dialog box to add a comment to a mood
+     */
     private void openAddCommentDialog() {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_comment, null);
         final EditText mComment = dialogView.findViewById(R.id.edit_text_comment);
 
+        // display the comment prevoiusly saved in the edit text of the dialog
         if (SharedPrefsUtils.containsComment(getApplicationContext())) {
             mComment.setText(SharedPrefsUtils.getComment(this));
         }
 
+        // Getting the buttons
         Button cancelButton = dialogView.findViewById(R.id.cancel_button);
         Button validateButton = dialogView.findViewById(R.id.validate_button);
 
+        // Setting up the cancel button
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Setting up the validation button
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,13 +216,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Method to start History activity
+    /**
+     * Method to start History activity
+     */
     private void startHistory() {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
-    // Method to start the chart activity
+    /**
+     * Method to start the chart activity
+     */
     private void startChartActivity() {
         Intent intent = new Intent(this, ChartActivity.class);
         startActivity(intent);

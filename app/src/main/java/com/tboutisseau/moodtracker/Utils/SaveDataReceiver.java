@@ -11,7 +11,10 @@ import com.tboutisseau.moodtracker.R;
 import java.util.ArrayList;
 
 /**
- * @author
+ * @author Todd
+ * BroadcastReceiver used to add the mood of the day stored in shared prefs
+ * (or the default one if none was saved that day) to the historyList.
+ * Resets the shared prefs and limits the size of historyList to 7 (days).
  */
 public class SaveDataReceiver extends BroadcastReceiver {
 
@@ -20,13 +23,19 @@ public class SaveDataReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        /**
+         * Retrieve the ArrayList used to store the moods for 7 days from shared prefs
+         * If it does not exist, create a new one
+         */
         moodHistoryList = SharedPrefsUtils.getHistoryList(context);
         if (moodHistoryList == null) {
             moodHistoryList = new ArrayList<>();
         }
 
-        // If a mood is saved in the SharedPreferences add its position and possible comment to the history list
-        // Else add a default mood (position 5) with no comment
+        /**
+         * If a mood is saved in the SharedPreferences add its position and possible comment to the history list
+         * Else add a default mood (position 5) with an empty comment
+         */
         if (SharedPrefsUtils.containsMood(context)) {
             moodHistoryList.add(new Mood(SharedPrefsUtils.getColor(context), SharedPrefsUtils.getComment(context), SharedPrefsUtils.getMoodPosition(context)));
         } else {
@@ -34,21 +43,22 @@ public class SaveDataReceiver extends BroadcastReceiver {
         }
 
         resetMood(context);
-        removeMood();
+        controlListSize();
         SharedPrefsUtils.saveHistoryList(context, moodHistoryList);
 
-        // Log to test the receiver
+        /**
+         * Log to test that the receiver triggers
+         */
         String TAG = "Save status";
         Log.i(TAG, "mood saved");
 
         // Toast to test the receiver
         //Toast.makeText(context, "Mood saved", Toast.LENGTH_SHORT).show();
-
     }
 
-
     /**
-     * Afetr a new mood has been saved in the array moodHistoryList, remove the keys position and comment from the preferences for the next day.
+     * After a new mood has been saved in the array moodHistoryList, remove the keys position ,comment, and color from shared prefs.
+     * So the next day shared prefs is ready to save new keys
      * @param context
      */
     private void resetMood(Context context) {
@@ -57,9 +67,11 @@ public class SaveDataReceiver extends BroadcastReceiver {
         SharedPrefsUtils.removeMood(context, SharedPrefsUtils.KEY_COMMENT);
     }
 
-    // If the size of the array of saved moods is greater than 7 remove the first entry of the list.
-    // That way it displays only the last 7 moods.
-    private void removeMood() {
+    /**
+     * If the size of the ArrayList of saved moods is greater than 7 remove the first entry of the list.
+     * That way it stores only the last 7 moods.
+     */
+    private void controlListSize() {
         if(moodHistoryList.size() > 7) {
             moodHistoryList.remove(0);
         }

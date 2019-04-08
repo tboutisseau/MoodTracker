@@ -23,6 +23,7 @@ public class MoodFragment extends Fragment {
 
     private Mood mood;
 
+    // Key to save the mood in a bundle
     private static final String MOOD_KEY = "MOOD_KEY";
 
     public MoodFragment() {
@@ -55,7 +56,7 @@ public class MoodFragment extends Fragment {
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return the view that displays a mood (smiley and background color)
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

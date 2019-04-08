@@ -20,6 +20,7 @@ public class ChartActivity extends AppCompatActivity {
 
     private ArrayList<Mood> historylist = new ArrayList<>();
 
+    // Declaring floats to represent the number of days for each mood
     private float sadDay = 0;
     private float disappointedDay = 0;
     private float normalDay = 0;
@@ -38,7 +39,7 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Adding the saved moods to their type of float for accurate distribution of the week's moods.
      */
     private void setupPieChart() {
         for (int i = 0; i < historylist.size(); i++) {
@@ -62,10 +63,9 @@ public class ChartActivity extends AppCompatActivity {
                     noMoodDay++;
                     break;
             }
-        }
 
-        // Add data from the history list to the chart, setting the labels to the name of the mood
-        List<PieEntry> pieEntryList = new ArrayList<>();
+            // Creating list of pieEntries to populate the chart
+            List<PieEntry> pieEntryList = new ArrayList<>();
 
             if (sadDay != 0) {
                 pieEntryList.add(new PieEntry(sadDay, getResources().getString(R.string.sad_mood)));
@@ -87,52 +87,61 @@ public class ChartActivity extends AppCompatActivity {
             }
 
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntryList, "Moods of the week");
-        PieData pieData = new PieData(pieDataSet);
+            PieDataSet pieDataSet = new PieDataSet(pieEntryList, "Moods of the week");
+            PieData pieData = new PieData(pieDataSet);
 
-        ArrayList<Integer> colors = new ArrayList<>();
 
-        // Setting the proper colors for the saved mood
-        if (sadDay != 0) {
-            colors.add(getResources().getColor(R.color.faded_red));
+            // Setting the proper colors for the saved mood depending on the position (i.e mood type).
+            // The colors are stored in an arrayList wich is then assigned to the chart dataSet
+            ArrayList<Integer> colors = new ArrayList<>();
+
+            if (sadDay != 0) {
+                colors.add(getResources().getColor(R.color.faded_red));
+            }
+            if (disappointedDay != 0) {
+                colors.add(getResources().getColor(R.color.warm_grey));
+            }
+            if (normalDay != 0) {
+                colors.add(getResources().getColor(R.color.cornflower_blue_65));
+            }
+            if (happyDay != 0) {
+                colors.add(getResources().getColor(R.color.light_sage));
+            }
+            if (superHappyDay != 0) {
+                colors.add(getResources().getColor(R.color.banana_yellow));
+            }
+            if (noMoodDay != 0) {
+                colors.add(getResources().getColor(R.color.default_black));
+            }
+
+            pieDataSet.setColors(colors);
+
+            // Creating the pieChart object and assigning it the pieData object
+            PieChart pieChart = findViewById(R.id.mood_pie_chart);
+            pieChart.setData(pieData);
+
+
+            // Styling the pie chart
+            // Space between the slices
+            // Animation
+            // Style, text, and size of the center hole
+            // Color of the values labels
+            pieDataSet.setSliceSpace(4f);
+            pieChart.animateY(800, Easing.EaseInCirc);
+            pieChart.setUsePercentValues(true);
+            pieChart.setDrawHoleEnabled(true);
+            pieChart.setHoleRadius(30f);
+            pieChart.setTransparentCircleRadius(36f);
+            pieChart.setCenterText(getResources().getString(R.string.moods_of_the_week));
+            pieChart.setCenterTextRadiusPercent(46f);
+            pieChart.setEntryLabelColor(getResources().getColor(R.color.medium_grey));
+
+
+            // Disabling the legend
+            Legend legend = pieChart.getLegend();
+            legend.setEnabled(false);
+
+            pieChart.invalidate();
         }
-        if (disappointedDay != 0) {
-            colors.add(getResources().getColor(R.color.warm_grey));
-        }
-        if (normalDay != 0) {
-            colors.add(getResources().getColor(R.color.cornflower_blue_65));
-        }
-        if (happyDay != 0) {
-            colors.add(getResources().getColor(R.color.light_sage));
-        }
-        if (superHappyDay != 0) {
-            colors.add(getResources().getColor(R.color.banana_yellow));
-        }
-        if (noMoodDay != 0) {
-            colors.add(getResources().getColor(R.color.default_black));
-        }
-
-
-        pieDataSet.setColors(colors);
-
-        PieChart pieChart = findViewById(R.id.mood_pie_chart);
-        pieChart.setData(pieData);
-
-        // Styling the pie chart
-        pieDataSet.setSliceSpace(4f);
-        pieChart.animateY(800, Easing.EaseInCirc);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleRadius(30f);
-        pieChart.setTransparentCircleRadius(36f);
-        pieChart.setCenterText(getResources().getString(R.string.moods_of_the_week));
-        pieChart.setCenterTextRadiusPercent(46f);
-        pieChart.setEntryLabelColor(getResources().getColor(R.color.medium_grey));
-
-        // Disabling the legend
-        Legend legend = pieChart.getLegend();
-        legend.setEnabled(false);
-
-        pieChart.invalidate();
     }
-
 }
