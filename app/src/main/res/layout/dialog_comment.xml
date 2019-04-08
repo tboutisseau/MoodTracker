@@ -12,17 +12,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:text="Commentaire"
-        android:textSize="16sp"
-        android:layout_alignParentStart="true"/>
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/edit_text_comment"
-        android:layout_alignParentStart="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"
         android:hint="tapez votre commentaire"
+        android:inputType="text"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
 
@@ -30,9 +31,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/edit_text_comment"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/cancel_button"
@@ -41,8 +42,7 @@
             android:background="@null"
             android:text="annuler"
             android:textColor="@color/colorAccent"
-            tools:ignore="UnknownId"
-            />
+            tools:ignore="UnknownId" />
 
         <Button
             android:id="@+id/validate_button"
@@ -50,8 +50,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:text="valider"
-            android:textColor="@color/colorAccent"
-            />
+            android:textColor="@color/colorAccent" />
 
     </LinearLayout>
 

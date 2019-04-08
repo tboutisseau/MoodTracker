@@ -14,7 +14,6 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     public PageAdapter(Context context, FragmentManager fm, List<Mood> moodsList) {
             super(fm);
-        Context context1 = context;
             this.moodsList = moodsList;
     }
 

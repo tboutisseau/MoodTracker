@@ -1,7 +1,8 @@
-package com.tboutisseau.moodtracker.Views;
+package com.tboutisseau.moodtracker.Widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -33,11 +34,6 @@ public class VerticalViewPager extends ViewPager {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(mSwipeOrientation == VERTICAL ? swapXY(event) : event);
-    }
-
-    @Override
-    public boolean performClick() {
-        return super.performClick();
     }
 
     @Override
@@ -99,7 +95,7 @@ public class VerticalViewPager extends ViewPager {
     private class VerticalPageTransformer implements ViewPager.PageTransformer {
 
         @Override
-        public void transformPage(View page, float position) {
+        public void transformPage(@NonNull View page, float position) {
             if (position < -1) {
                 // This page is way off-screen to the left
                 page.setAlpha(0);

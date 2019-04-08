@@ -34,11 +34,6 @@ public class Mood implements Serializable {
         this.position = position;
     }
 
-    public Mood (int moodBackgroundColor) {
-        this.moodBackgroundColor = moodBackgroundColor;
-    }
-
-
     // Getters and setters
     public int getMoodIcon() {
         return moodIcon;

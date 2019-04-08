@@ -13,14 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.tboutisseau.moodtracker.Controllers.Fragments.PageAdapter;
 import com.tboutisseau.moodtracker.Models.Mood;
 import com.tboutisseau.moodtracker.R;
 import com.tboutisseau.moodtracker.Utils.SaveDataReceiver;
 import com.tboutisseau.moodtracker.Utils.SharedPrefsUtils;
-import com.tboutisseau.moodtracker.Views.VerticalViewPager;
+import com.tboutisseau.moodtracker.Widget.VerticalViewPager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -149,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-        calendar.set(Calendar.MINUTE, 26);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 16);
         calendar.set(Calendar.SECOND, 0);
 
         // Make the alarm manager

@@ -9,7 +9,6 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.tboutisseau.moodtracker.Models.Mood;
 import com.tboutisseau.moodtracker.R;
 import com.tboutisseau.moodtracker.Utils.SharedPrefsUtils;
@@ -20,6 +19,13 @@ import java.util.List;
 public class ChartActivity extends AppCompatActivity {
 
     private ArrayList<Mood> historylist = new ArrayList<>();
+
+    private float sadDay = 0;
+    private float disappointedDay = 0;
+    private float normalDay = 0;
+    private float happyDay = 0;
+    private float superHappyDay = 0;
+    private float noMoodDay = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,32 +38,54 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     /**
-     * Add data from the history list to the chart, setting the labels to the name of the mood
+     *
      */
     private void setupPieChart() {
-        List<PieEntry> pieEntryList = new ArrayList<>();
         for (int i = 0; i < historylist.size(); i++) {
             switch (historylist.get(i).getPosition()) {
                 case 0 :
-                    pieEntryList.add(new PieEntry(1f, getResources().getString(R.string.sad_mood)));
+                    sadDay++;
                     break;
                 case 1 :
-                    pieEntryList.add(new PieEntry(1f, getResources().getString(R.string.disappointed_mood)));
+                    disappointedDay++;
                     break;
                 case 2 :
-                    pieEntryList.add(new PieEntry(1f, getResources().getString(R.string.normal_mood)));
+                    normalDay++;
                     break;
                 case 3 :
-                    pieEntryList.add(new PieEntry(1f, getResources().getString(R.string.happy_mood)));
+                    happyDay++;
                     break;
                 case 4 :
-                    pieEntryList.add(new PieEntry(1f, getResources().getString(R.string.super_happy_mood)));
+                    superHappyDay++;
                     break;
                 case 5 :
-                    pieEntryList.add(new PieEntry(1f, getResources().getString(R.string.no_mood)));
+                    noMoodDay++;
                     break;
             }
         }
+
+        // Add data from the history list to the chart, setting the labels to the name of the mood
+        List<PieEntry> pieEntryList = new ArrayList<>();
+
+            if (sadDay != 0) {
+                pieEntryList.add(new PieEntry(sadDay, getResources().getString(R.string.sad_mood)));
+            }
+            if (disappointedDay != 0) {
+                pieEntryList.add(new PieEntry(disappointedDay, getResources().getString(R.string.disappointed_mood)));
+            }
+            if (normalDay != 0) {
+                pieEntryList.add(new PieEntry(normalDay, getResources().getString(R.string.normal_mood)));
+            }
+            if (happyDay != 0) {
+                pieEntryList.add(new PieEntry(happyDay, getResources().getString(R.string.happy_mood)));
+            }
+            if (superHappyDay != 0) {
+                pieEntryList.add(new PieEntry(superHappyDay, getResources().getString(R.string.super_happy_mood)));
+            }
+            if (noMoodDay != 0) {
+                pieEntryList.add(new PieEntry(noMoodDay, getResources().getString(R.string.no_mood)));
+            }
+
 
         PieDataSet pieDataSet = new PieDataSet(pieEntryList, "Moods of the week");
         PieData pieData = new PieData(pieDataSet);
@@ -65,28 +93,25 @@ public class ChartActivity extends AppCompatActivity {
         ArrayList<Integer> colors = new ArrayList<>();
 
         // Setting the proper colors for the saved mood
-        for (int j = 0; j < historylist.size(); j++) {
-            switch (historylist.get(j).getPosition()) {
-                case 0:
-                    colors.add(getResources().getColor(R.color.faded_red));
-                    break;
-                case 1:
-                    colors.add(getResources().getColor(R.color.warm_grey));
-                    break;
-                case 2:
-                    colors.add(getResources().getColor(R.color.cornflower_blue_65));
-                    break;
-                case 3:
-                    colors.add(getResources().getColor(R.color.light_sage));
-                    break;
-                case 4:
-                    colors.add(getResources().getColor(R.color.banana_yellow));
-                    break;
-                case 5:
-                    colors.add(getResources().getColor(R.color.default_black));
-                    break;
-            }
+        if (sadDay != 0) {
+            colors.add(getResources().getColor(R.color.faded_red));
         }
+        if (disappointedDay != 0) {
+            colors.add(getResources().getColor(R.color.warm_grey));
+        }
+        if (normalDay != 0) {
+            colors.add(getResources().getColor(R.color.cornflower_blue_65));
+        }
+        if (happyDay != 0) {
+            colors.add(getResources().getColor(R.color.light_sage));
+        }
+        if (superHappyDay != 0) {
+            colors.add(getResources().getColor(R.color.banana_yellow));
+        }
+        if (noMoodDay != 0) {
+            colors.add(getResources().getColor(R.color.default_black));
+        }
+
 
         pieDataSet.setColors(colors);
 

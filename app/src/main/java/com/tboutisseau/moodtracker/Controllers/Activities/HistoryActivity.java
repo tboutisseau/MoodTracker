@@ -29,7 +29,6 @@ public class HistoryActivity extends AppCompatActivity {
     private final ArrayList<RelativeLayout> layoutsList = new ArrayList<>();
     private final ArrayList<ImageView> imageList = new ArrayList<>();
     private final ArrayList<TextView> textviewsList = new ArrayList<>();
-    private final ArrayList<Mood> backgroundList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class HistoryActivity extends AppCompatActivity {
         initLayoutsList();
         initImageViewsList();
         initTextviewsList();
-        initBackgroundList();
 
         if (SharedPrefsUtils.containsHistoryList(this)) {
             historyList = SharedPrefsUtils.getHistoryList(this);
@@ -98,24 +96,6 @@ public class HistoryActivity extends AppCompatActivity {
         textviewsList.add((TextView) findViewById(R.id.textview_1_days));
     }
 
-    /**
-     * Initiate a background color list, adding a default color in case no mood is saved.
-     */
-    private void initBackgroundList() {
-        Mood sadMood = new Mood(R.color.faded_red);
-        Mood disapointedMood = new Mood(R.color.warm_grey);
-        Mood normalMood = new Mood(R.color.cornflower_blue_65);
-        Mood happyMood = new Mood(R.color.light_sage);
-        Mood superHappyMood = new Mood (R.color.banana_yellow);
-        Mood defaultMood = new Mood (R.color.default_black);
-
-        backgroundList.add(sadMood);
-        backgroundList.add(disapointedMood);
-        backgroundList.add(normalMood);
-        backgroundList.add(happyMood);
-        backgroundList.add(superHappyMood);
-        backgroundList.add(defaultMood);
-    }
 
     /**
      * Method to set the proper background color on the bar representing the saved mood.
