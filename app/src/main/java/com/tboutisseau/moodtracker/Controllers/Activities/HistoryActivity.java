@@ -253,10 +253,8 @@ public class HistoryActivity extends AppCompatActivity {
         for(int i = 0; i < historyList.size(); i++) {
             TextView textView = textviewsList.get(i);
 
-            String nomoodSaved = " - Pas d'humeur enregistrée ce jour";
-
             if (historyList.get(i).getPosition() == 5) {
-                textView.append(nomoodSaved);
+                textView.append(" - " + getResources().getString(R.string.no_mood_saved));
                 textView.setTextColor(getResources().getColor(R.color.off_white));
             }
         }

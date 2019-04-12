@@ -1,18 +1,24 @@
 package com.tboutisseau.moodtracker.Controllers.Activities;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.tboutisseau.moodtracker.Models.Mood;
 import com.tboutisseau.moodtracker.R;
 import com.tboutisseau.moodtracker.Utils.SharedPrefsUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +94,10 @@ public class ChartActivity extends AppCompatActivity {
 
 
             PieDataSet pieDataSet = new PieDataSet(pieEntryList, "Moods of the week");
+            pieDataSet.setValueFormatter(new MyValueFormatter());
             PieData pieData = new PieData(pieDataSet);
+            pieData.setValueTextSize(16f);
+            pieData.setValueTextColor(Color.BLACK);
 
 
             // Setting the proper colors for the saved mood depending on the position (i.e mood type).
@@ -128,13 +137,12 @@ public class ChartActivity extends AppCompatActivity {
             // Color of the values labels
             pieDataSet.setSliceSpace(4f);
             pieChart.animateY(800, Easing.EaseInCirc);
-            pieChart.setUsePercentValues(true);
             pieChart.setDrawHoleEnabled(true);
             pieChart.setHoleRadius(30f);
             pieChart.setTransparentCircleRadius(36f);
             pieChart.setCenterText(getResources().getString(R.string.moods_of_the_week));
             pieChart.setCenterTextRadiusPercent(46f);
-            pieChart.setEntryLabelColor(getResources().getColor(R.color.medium_grey));
+            pieChart.setEntryLabelColor(Color.BLACK);
 
 
             // Disabling the legend
@@ -142,6 +150,23 @@ public class ChartActivity extends AppCompatActivity {
             legend.setEnabled(false);
 
             pieChart.invalidate();
+        }
+    }
+
+    /**
+     * Formatting the values of the pie chart so that it appends strings day or days after the value and removes the decimal
+     */
+    public class MyValueFormatter extends ValueFormatter {
+
+        private DecimalFormat mFormat;
+
+        public MyValueFormatter() {
+            mFormat = new DecimalFormat("###,###,##0");
+        }
+
+        public String getFormattedValue(float value) {
+            if (value == 1) return mFormat.format(value) + " " + (getResources().getString(R.string.chart_day));
+            else return mFormat.format(value) + " " + (getResources().getString(R.string.chart_days));
         }
     }
 }

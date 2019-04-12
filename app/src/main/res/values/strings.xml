@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">MoodTracker</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="seven_days_ago">Il y a une semaine</string>
     <string name="six_days_ago">Il y a six jours</string>
     <string name="five_days_ago">Il y a cinq jours</string>
@@ -17,4 +16,7 @@
     <string name="super_happy_mood">très heureux</string>
     <string name="no_mood">rien</string>
     <string name="moods_of_the_week">humeurs de la semaine</string>
+    <string name="chart_day">jour</string>
+    <string name="chart_days">jours</string>
+    <string name="no_mood_saved">Pas d\'humeur enregistrée ce jour</string>
 </resources>
