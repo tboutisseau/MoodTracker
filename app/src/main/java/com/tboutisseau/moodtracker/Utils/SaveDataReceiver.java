@@ -23,43 +23,35 @@ public class SaveDataReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        /**
-         * Retrieve the ArrayList used to store the moods for 7 days from shared prefs
-         * If it does not exist, create a new one
-         */
+
+        // Retrieve the ArrayList used to store the moods for 7 days from shared prefs
+        // If it does not exist, create a new one
         moodHistoryList = SharedPrefsUtils.getHistoryList(context);
         if (moodHistoryList == null) {
             moodHistoryList = new ArrayList<>();
         }
 
-        /**
-         * If a mood is saved in the SharedPreferences add its position and possible comment to the history list
-         * Else add a default mood (position 5) with an empty comment
-         */
+        // If a mood is saved in the SharedPreferences add its position and possible comment to the history list
+        // Else add a default mood (position 5) with an empty comment
         if (SharedPrefsUtils.containsMood(context)) {
             moodHistoryList.add(new Mood(SharedPrefsUtils.getColor(context), SharedPrefsUtils.getComment(context), SharedPrefsUtils.getMoodPosition(context)));
         } else {
-            moodHistoryList.add(new Mood(R.color.default_black,"", 5));
+            moodHistoryList.add(new Mood(R.color.no_mood_saved,"", 5));
         }
 
         resetMood(context);
         controlListSize();
         SharedPrefsUtils.saveHistoryList(context, moodHistoryList);
 
-        /**
-         * Log to test that the receiver triggers
-         */
+        // Log to test that the receiver triggers
         String TAG = "Save status";
         Log.i(TAG, "mood saved");
-
-        // Toast to test the receiver
-        //Toast.makeText(context, "Mood saved", Toast.LENGTH_SHORT).show();
     }
 
     /**
      * After a new mood has been saved in the array moodHistoryList, remove the keys position ,comment, and color from shared prefs.
      * So the next day shared prefs is ready to save new keys
-     * @param context
+     * @param context context
      */
     private void resetMood(Context context) {
         SharedPrefsUtils.removeMood(context, SharedPrefsUtils.BACKGROUND_COLOR);

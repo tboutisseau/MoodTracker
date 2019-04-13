@@ -1,7 +1,9 @@
 package com.tboutisseau.moodtracker.Controllers.Activities;
 
-import android.os.Bundle;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,7 @@ public class HistoryActivity extends AppCompatActivity {
      * historyList : the list of saved moods
      * layoutsList : list of relative layouts representing the saved mood for each day
      * imageList : list of images representing the comment icon for each day
-     * backgroundList : list of colors
+     * textviewsList : list of textViews representing the name of the day
      */
     private ArrayList<Mood> historyList = new ArrayList<>();
     private final ArrayList<RelativeLayout> layoutsList = new ArrayList<>();
@@ -192,8 +194,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     /**
      * Method to define the width of the bar depending on the mood
-     * @param position
-     * @param layoutParams
+     * @param position position of the mood
+     * @param layoutParams parameters of the relative layout representing one saved mood
      */
     private void moodScreenWidth(int position, ViewGroup.LayoutParams layoutParams) {
         int screenWidth = getScreenWidth();
@@ -255,7 +257,7 @@ public class HistoryActivity extends AppCompatActivity {
 
             if (historyList.get(i).getPosition() == 5) {
                 textView.append(" - " + getResources().getString(R.string.no_mood_saved));
-                textView.setTextColor(getResources().getColor(R.color.off_white));
+                textView.setTextColor(getResources().getColor(R.color.no_mood_saved_text));
             }
         }
     }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.tboutisseau.moodtracker.Controllers.Fragments.PageAdapter;
 import com.tboutisseau.moodtracker.Models.Mood;
@@ -119,19 +120,19 @@ public class MainActivity extends AppCompatActivity {
             // Setting up pageChangeListener to save the mood position and color each time a new page is selected
             @Override
             public void onPageSelected(int position) {
-                SharedPrefsUtils.saveColor(MainActivity.this, moodsList.get(position).getMoodBackgroundColor());
+
+                // Saving the mood position and background color on page changed
                 SharedPrefsUtils.saveMoodPosition(MainActivity.this, position);
+                SharedPrefsUtils.saveColor(MainActivity.this, moodsList.get(position).getMoodBackgroundColor() );
                 //Toast.makeText(MainActivity.this, "position saved", Toast.LENGTH_SHORT).show();
 
-                // creating int sound that retrieves the sound of the selected mood
                 int sound = moodsList.get(position).getMoodSound();
 
-                // Release the mediaPlayer if it exists to free up memory
+                // Checking if the mediaPlayer still exists before creating a new one
                 if (mMediaPlayer != null) {
                     mMediaPlayer.release();
                 }
 
-                // Creating the mediaPlayer to play the proper sound
                 mMediaPlayer = MediaPlayer.create(MainActivity.this, sound);
 
                 mMediaPlayer.start();
@@ -154,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
         calendar.get(Calendar.YEAR);
         calendar.get(Calendar.MONTH);
         calendar.get(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 36);
+        calendar.set(Calendar.HOUR_OF_DAY, 11);
+        calendar.set(Calendar.MINUTE, 28);
         calendar.set(Calendar.SECOND, 0);
 
         // Make the alarm manager
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_comment, null);
         final EditText mComment = dialogView.findViewById(R.id.edit_text_comment);
 
-        // display the comment prevoiusly saved in the edit text of the dialog
+        // display the comment previously saved in the edit text of the dialog
         if (SharedPrefsUtils.containsComment(getApplicationContext())) {
             mComment.setText(SharedPrefsUtils.getComment(this));
         }
@@ -198,15 +199,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Setting up the validation button
+        // Calls the saveComment method to store it in the shared prefs
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPrefsUtils.saveComment(MainActivity.this, mComment.getText().toString());
-//                if (SharedPrefsUtils.containsComment(getBaseContext())) {
-//                    Toast.makeText(MainActivity.this, "comment saved", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(MainActivity.this, "new comment saved", Toast.LENGTH_SHORT).show();
-//                }
                 dialogBuilder.dismiss();
             }
         });
@@ -242,5 +239,4 @@ public class MainActivity extends AppCompatActivity {
             mMediaPlayer.release();
         }
     }
-
 }

@@ -120,7 +120,7 @@ public class ChartActivity extends AppCompatActivity {
                 colors.add(getResources().getColor(R.color.banana_yellow));
             }
             if (noMoodDay != 0) {
-                colors.add(getResources().getColor(R.color.default_black));
+                colors.add(getResources().getColor(R.color.no_mood_saved));
             }
 
             pieDataSet.setColors(colors);
@@ -160,7 +160,7 @@ public class ChartActivity extends AppCompatActivity {
 
         private DecimalFormat mFormat;
 
-        public MyValueFormatter() {
+        MyValueFormatter() {
             mFormat = new DecimalFormat("###,###,##0");
         }
 

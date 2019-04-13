@@ -47,14 +47,14 @@ public class SharedPrefsUtils {
      * Retrieve the mood background color from the shared preferences
      */
 
-    public static int getColor (Context context) {
+    static int getColor(Context context) {
         setSharedPrefs(context);
-        return sharedPreferences.getInt(BACKGROUND_COLOR, R.color.default_black);
+        return sharedPreferences.getInt(BACKGROUND_COLOR, R.color.no_mood_saved);
     }
 
     /**
      * Put the comment string into the shared preferences using the appropriate key
-     * @param context
+     * @param context context
      * @param comment string containing the mood comment
      */
     public static void saveComment (Context context, String comment) {
@@ -84,7 +84,7 @@ public class SharedPrefsUtils {
 
     /**
      * Put the mood position int into shared prefs using the appropriate key
-     * @param context
+     * @param context context
      * @param position of the mood in the moodsList ArrayList (0=sad, ...,  4=super happy, 5 = default)
      */
 
@@ -97,7 +97,7 @@ public class SharedPrefsUtils {
     /**
      * Retrieve the mood position int from shared prefs
      * Default value 3 corresponds to the happy mood
-     * @param context
+     * @param context context
      * @return int position of the saved mood
      */
     public static int getMoodPosition(Context context) {
@@ -107,7 +107,7 @@ public class SharedPrefsUtils {
 
     /**
      * Boolean to check if shared prefs contains a mood position (i.e a mood) (return false if not)
-     * @param context
+     * @param context context
      * @return true if a position exists in shared prefs
      */
     public static boolean containsMood(Context context) {
@@ -118,7 +118,7 @@ public class SharedPrefsUtils {
 
     /**
      * Used to remove the keys from shared prefs
-     * @param context
+     * @param context context
      * @param key the key to remove from shared prefs (KEY_COMMENT, KEY_POSITION, BACKGROUND_COLOR)
      */
     static void removeMood(Context context, String key) {
@@ -130,8 +130,8 @@ public class SharedPrefsUtils {
     /**
      * Storing the historyList in shared prefs using Gson object, since we have to serialize the historyList ArrayList
      * to be able to store it in shard prefs
-     * @param context
-     * @param moodHistoryList
+     * @param context context
+     * @param moodHistoryList ArrayList that contains the saved moods
      */
     static void saveHistoryList(Context context, ArrayList moodHistoryList) {
         setSharedPrefs(context);
@@ -143,7 +143,7 @@ public class SharedPrefsUtils {
 
     /**
      * Retrieve the historyList from shared prefs using deserialization provided by Gson
-     * @param context
+     * @param context context
      * @return ArrayList containing the saved moods
      */
     public static ArrayList<Mood> getHistoryList(Context context) {
@@ -162,7 +162,7 @@ public class SharedPrefsUtils {
 
     /**
      * Boolean to check if shared prefs contains a historyList
-     * @param context
+     * @param context context
      * @return true if historyList exists in shared prefs
      */
     public static boolean containsHistoryList(Context context) {
@@ -172,7 +172,7 @@ public class SharedPrefsUtils {
 
     /**
      * Method to reset the SharedPreferences. Only used for development purposes.
-     * @param context
+     * @param context context
      */
     public static void clearPreferences(Context context) {
         setSharedPrefs(context);
