@@ -14,6 +14,7 @@ They can then view their moods for the past week in a history list, providing a 
 - SharedPreferences
 - Gson
 - AlarmManager
+- MediaPlayer
 
 ## Libraries
 
